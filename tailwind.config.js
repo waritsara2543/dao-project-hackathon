@@ -52,7 +52,8 @@ module.exports = {
         purple:"#602EA6",
         pink:"#C977D6",
         "light-pink":"#FF3CD4",
-        "dark-blue":"#0B1531"
+        "dark-blue":"#0B1531",
+        "light-blue":"#0F55E8",
       },
       borderRadius: {
         lg: "var(--radius)",

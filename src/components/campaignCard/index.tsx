@@ -1,25 +1,76 @@
 import Image from "next/image";
 import { CampaignButton } from "./button";
+import {
+  StarIcon,
+  RocketLaunchIcon,
+  FlagIcon,
+  MegaphoneIcon,
+} from "@heroicons/react/24/outline";
 
-const CampaignCard = () => {
+export interface CampaignCardProps {
+  title: string;
+  description: string;
+  image: string;
+  status: "vote" | "join" | "closed" | "comming";
+}
+const CampaignCard = ({
+  title,
+  description,
+  image,
+  status,
+}: CampaignCardProps) => {
+  const renderStatus = () => {
+    if (status === "vote") {
+      return (
+        <div className="absolute right-2 -top-4 rounded-full h-10 w-10 bg-gradient-to-r from-pink to-light-pink to-50% flex items-center">
+          <StarIcon className="h-6 w-6 text-white mx-auto" />
+        </div>
+      );
+    }
+    if (status === "join") {
+      return (
+        <div className="absolute right-2 -top-4 rounded-full h-10 w-10 bg-gradient-to-r from-pink to-light-blue to-50% flex items-center">
+          <RocketLaunchIcon className="h-6 w-6 text-white mx-auto" />
+        </div>
+      );
+    }
+    if (status === "closed") {
+      return (
+        <div className="absolute right-2 -top-4 rounded-full h-10 w-10 bg-gradient-to-r from-pink to-black to-50% flex items-center">
+          <FlagIcon className="h-6 w-6 text-white mx-auto" />
+        </div>
+      );
+    }
+    if (status === "comming") {
+      return (
+        <div className="absolute right-2 -top-4 rounded-full h-10 w-10 bg-gradient-to-r from-pink to-purple to-50% flex items-center">
+          <MegaphoneIcon className="h-6 w-6 text-white mx-auto" />
+        </div>
+      );
+    }
+  };
   return (
     <div className="relative">
       <Image
-        src="/assets/campaign.png"
+        src={image}
         width={250}
         height={250}
         alt="campaign"
         className="rounded-t-xl"
       />
       <div className="rounded-xl bg-opacity-10 text-white px-6 py-2 absolute top-32 left-0 z-10 bg-gradient-to-b from-blue/25 from-10% via-blue/44 via-30%  to-blue to-90% backdrop-blur-sm w-[250px] grid gap-2 border border-white/30">
-        <div className="absolute right-2 -top-4 rounded-full h-10 w-10 bg-gradient-to-r from-pink to-light-pink to-50%"></div>
-        <p className="text-lg font-semibold">Using Discord</p>
+        {renderStatus()}
+
+        <p className="text-lg font-semibold">{title}</p>
         <div className="w-full h-[1px] bg-gradient-to-r from-purple/0 from-5% via-pink via-40% to-purple/0 to-90% drop-shadow-md"></div>
-        <p className="text-xs">
-          Prompt writing involves crafting clear and engaging prompts, while
-          using images to create a visual representation of the idea or concept.
+        <p className="text-xs h-20 overflow-ellipsis overflow-hidden">
+          {description}
         </p>
-        <CampaignButton text="Join" />
+        {status === "vote" || status === "join" ? (
+          <CampaignButton text={status} />
+        ) : (
+          <div className="h-7"></div>
+        )}
       </div>
     </div>
   );
