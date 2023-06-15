@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CampaignButton } from "./button";
+import { CampaignButton } from "../campaignCard/button";
 import {
   StarIcon,
   RocketLaunchIcon,
@@ -8,20 +8,22 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
-export interface CampaignCardProps {
+export interface ClaimCardProps {
   id: string;
   title: string;
   description: string;
   image: string;
-  status: "open" | "closed" | "comming";
+  status: "open" | "closed";
+  claim: "claim" | "claimed" | "none";
 }
-const CampaignCard = ({
+const ClaimCard = ({
   id,
   title,
   description,
   image,
   status,
-}: CampaignCardProps) => {
+  claim,
+}: ClaimCardProps) => {
   const renderStatus = () => {
     if (status === "open") {
       return (
@@ -34,13 +36,6 @@ const CampaignCard = ({
       return (
         <div className="absolute right-2 -top-4 rounded-full h-10 w-10 bg-gradient-to-r from-pink to-black to-50% flex items-center">
           <FlagIcon className="h-6 w-6 text-white mx-auto" />
-        </div>
-      );
-    }
-    if (status === "comming") {
-      return (
-        <div className="absolute right-2 -top-4 rounded-full h-10 w-10 bg-gradient-to-r from-pink to-purple to-50% flex items-center">
-          <MegaphoneIcon className="h-6 w-6 text-white mx-auto" />
         </div>
       );
     }
@@ -62,15 +57,10 @@ const CampaignCard = ({
         <p className="text-xs h-20 overflow-ellipsis overflow-hidden">
           {description}
         </p>
-        {status === "open" ? (
-          <div className="w-full flex gap-4">
-            <Link href="/join-form" className="w-full">
-              <CampaignButton text="join" />
-            </Link>
-            <Link href={`/campaign/${id}/proposals`} className="w-full">
-              <CampaignButton text="vote" />
-            </Link>
-          </div>
+        {status === "closed" && claim === "claim" ? (
+          <CampaignButton text="claim" />
+        ) : claim === "claimed" ? (
+          <CampaignButton text="claimed" />
         ) : (
           <div className="h-7"></div>
         )}
@@ -79,4 +69,4 @@ const CampaignCard = ({
   );
 };
 
-export default CampaignCard;
+export default ClaimCard;

@@ -2,10 +2,11 @@ import { join } from "path";
 import React from "react";
 import Image from "next/image";
 import ContentCard from "@/components/contentCard/ContentCard";
-import { CampaignButton } from "../campaign/components/CampaignBt";
+import { CampaignButton } from "../../(components)/CampaignBt";
+import { data } from "@/constants/mockup";
 
-const LeaderBoard = () => {
-  const campaignName = "New_test";
+const LeaderBoard = ({ campaignId }: { campaignId: string }) => {
+  const campaign = data.filter((item) => item.id === campaignId)[0];
   const names = [
     "Alice",
     "Bob",
@@ -32,7 +33,9 @@ const LeaderBoard = () => {
   return (
     <main className="min-h-screen p-24 text-white">
       <div className="flex flex-col">
-        <div className="text-3xl">Campain: {campaignName}</div>
+        <h1 className="font-bold text-transparent text-3xl bg-clip-text bg-gradient-to-tr from-font-pink via-font-blue to-pink">
+          Campaign: {campaign.title}
+        </h1>
         <div className="mt-16 flex flex-col bg-gradient-to-br from-[#1B3351]/30 to-[#9B6195]/30 w-full rounded-2xl">
           <div className="flex justify-between h-20 px-10 items-center bg-gradient-to-br from-[#1B3351] to-[#9B6195] rounded-xl">
             <div className="flex gap-4 items-center">
@@ -54,7 +57,8 @@ const LeaderBoard = () => {
           {joiner.map((item, index) => (
             <div
               key={index}
-              className="grid grid-flow-col justify-around items-center w-full h-16">
+              className="grid grid-flow-col justify-around items-center w-full h-16"
+            >
               <div>{index + 1}</div>
               <Image
                 src="/assets/squirrel.png"
@@ -75,7 +79,7 @@ const LeaderBoard = () => {
           <div className="text-3xl"> Content</div>
           <ContentCard
             wallet={joiner[0].wallet}
-            campaignName={campaignName}
+            campaignName={campaign.title}
             button={RewardBt}
           />
         </div>

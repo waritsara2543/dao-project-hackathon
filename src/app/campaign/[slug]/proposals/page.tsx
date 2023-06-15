@@ -1,10 +1,10 @@
 import React from "react";
-import JoinerCard from "../components/JoinerCard";
+import JoinerCard from "../../(components)/JoinerCard";
+import { data } from "@/constants/mockup";
 
 const JoinerCampaign = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
-  console.log(slug);
-
+  const campaign = data.filter((item) => item.id === slug)[0];
   const names = [
     "Alice",
     "Bob",
@@ -25,12 +25,15 @@ const JoinerCampaign = ({ params }: { params: { slug: string } }) => {
 
   return (
     <main className="min-h-screen p-24 text-white">
-      <div className="text-white">
-        <div>Campaign: {slug}</div>
-        <div>List joiner</div>
-        {joiner.map((item, index) => (
-          <JoinerCard key={index} wallet={item.wallet} name={item.name} />
-        ))}
+      <div className="text-white grid gap-5">
+        <h1 className="font-bold text-transparent text-3xl bg-clip-text bg-gradient-to-tr from-font-pink via-font-blue to-pink">
+          Campaign: {campaign.title}
+        </h1>
+        <div className="grid gap-5">
+          {joiner.map((item, index) => (
+            <JoinerCard key={index} wallet={item.wallet} name={item.name} />
+          ))}
+        </div>
       </div>
     </main>
   );

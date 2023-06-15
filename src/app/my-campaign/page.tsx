@@ -23,13 +23,15 @@ const MyCampaignPage = () => {
         <div className="w-full h-[1px] bg-gradient-to-r from-purple/0 from-5% via-pink via-40% to-purple/0 to-90% drop-shadow-md"></div>
         <div className="grid grid-cols-4 gap-10">
           {data.map((item) => (
-            <CampaignCard
-              key={item.title}
-              title={item.title}
-              description={item.description}
-              image={item.image}
-              status={item.status}
-            />
+            <Link href={`/campaign/${item.id}`} key={item.id}>
+              <CampaignCard
+                id={item.id}
+                title={item.title}
+                description={item.description}
+                image={item.image}
+                status={item.status}
+              />
+            </Link>
           ))}
         </div>
       </div>
