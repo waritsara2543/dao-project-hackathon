@@ -1,4 +1,4 @@
-import CampaignCard, { CampaignCardProps } from "@/components/campaignCard";
+import CampaignCard from "@/components/campaignCard";
 import { data } from "@/constants/mockup";
 import Link from "next/link";
 

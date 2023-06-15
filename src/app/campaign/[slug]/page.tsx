@@ -3,7 +3,7 @@ import React from "react";
 import { CampaignButton } from "../(components)/CampaignBt";
 import Link from "next/link";
 import { data } from "@/constants/mockup";
-import LeaderBoard from "./leaderBoard";
+import LeaderBoard from "./(leaderBoard)";
 
 const CampaignPage = ({ params }: { params: { slug: string } }) => {
   const wallet = "0x1234567890";
@@ -11,13 +11,6 @@ const CampaignPage = ({ params }: { params: { slug: string } }) => {
   const campaign = data.filter((item) => item.id === campaignId)[0];
 
   const renderBt = () => {
-    // if (status === "vote") {
-    //   return (
-    //     <Link href={`/campaign/${campaignName}`}>
-    //       <CampaignButton text={status} />
-    //     </Link>
-    //   );
-    // }
     if (campaign.status === "open") {
       return (
         <div className="flex justify-center gap-5">
