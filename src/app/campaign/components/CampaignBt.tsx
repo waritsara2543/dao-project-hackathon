@@ -5,7 +5,7 @@ interface CampaignButtonProps {
 }
 export function CampaignButton({ text }: CampaignButtonProps) {
   return (
-    <Button className="py-1 h-10 bg-[#2F80ED] rounded-full capitalize">
+    <Button className="w-full py-1 h-10 bg-[#2F80ED] rounded-full capitalize">
       {text}
     </Button>
   );
