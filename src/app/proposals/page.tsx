@@ -1,5 +1,5 @@
 import React from "react";
-import JoinerCard from "../(components)/JoinerCard";
+import JoinerCard from "../campaign/(components)/JoinerCard";
 import { data } from "@/constants/mockup";
 
 const JoinerCampaign = ({

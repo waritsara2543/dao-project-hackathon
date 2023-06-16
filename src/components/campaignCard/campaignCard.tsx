@@ -68,7 +68,7 @@ const CampaignCard = ({
               <CampaignButton text="join" />
             </Link>
             <Link
-              href={{ pathname: `/campaign/proposals`, query: { id: id } }}
+              href={{ pathname: `/proposals`, query: { id: id } }}
               className="w-full"
             >
               <CampaignButton text="vote" />

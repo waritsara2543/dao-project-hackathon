@@ -23,7 +23,7 @@ const CampaignPage = ({
           </Link>
           <Link
             href={{
-              pathname: `/campaign/proposals`,
+              pathname: `proposals`,
               query: { id: campaignId },
             }}
           >
