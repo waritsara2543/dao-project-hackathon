@@ -1,4 +1,4 @@
-import { CampaignCardProps } from "@/components/campaignCard";
+import { CampaignCardProps } from "@/components/campaignCard/campaignCard";
 
 export const data: Array<CampaignCardProps> = [
   {
