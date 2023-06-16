@@ -2,20 +2,14 @@
 import Link from "next/link";
 import React from "react";
 import CampaignCard from "../campaignCard";
-import { useContractRead } from "wagmi";
-import addressList from "@/constants/addressList";
-import { MyGovernor__factory } from "@/typechain-types";
+import { useGetCampaign } from "@/hooks/useGetCampaign";
 
 const CampaignData = () => {
-  const { data, isError, isLoading } = useContractRead({
-    address: addressList.getAddress("MyGovernor"),
-    abi: MyGovernor__factory.abi,
-    functionName: "getAllCampaigns",
-  });
+  const { allCampaign } = useGetCampaign();
 
   return (
     <div>
-      {data?.map((item, index) => (
+      {allCampaign?.map((item, index) => (
         <Link
           key={index}
           href={{
