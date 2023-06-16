@@ -16,6 +16,10 @@ import { DatePicker } from "@/components/createCampaign/dateInput";
 import { Button } from "@/components/ui/button";
 import { addDays, format } from "date-fns";
 import { DateRange } from "react-day-picker";
+import { useContractWrite } from "wagmi";
+import addressList from "@/constants/addressList";
+import { parseEther } from "viem";
+import { MyGovernor__factory } from "@/typechain-types";
 
 const Form = () => {
   const [title, setTitle] = React.useState("");
@@ -30,6 +34,18 @@ const Form = () => {
   });
   const [closeDate, setCloseDate] = React.useState<Date>();
   const [amountPrize, setAmountPrize] = React.useState("");
+
+  const { data, isLoading, isSuccess, write } = useContractWrite({
+    address: addressList.getAddress("MyGovernor"),
+    abi: MyGovernor__factory.abi,
+    functionName: "createCampaign",
+    args: [
+      "test",
+      parseEther("1000"),
+      parseEther("1638352800"),
+      parseEther("1638871200"),
+    ],
+  });
   return (
     <div className="bg-gradient-to-br from-secondary-blue/50 to-secondary-pink/50 grid gap-10 p-10 rounded-lg">
       <div className="grid grid-cols-4 items-center">
@@ -127,9 +143,14 @@ const Form = () => {
         </div>
       </div>
       <div className="flex justify-center">
-        <Button className="bg-gradient-to-r from-purple to-font-pink px-8">
+        <Button
+          className="bg-gradient-to-r from-purple to-font-pink px-8"
+          onClick={() => write()}
+        >
           Submit
         </Button>
+        {isLoading && <div>Check Wallet</div>}
+        {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
       </div>
     </div>
   );
