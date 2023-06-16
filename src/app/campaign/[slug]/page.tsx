@@ -6,34 +6,34 @@ import { data } from "@/constants/mockup";
 import LeaderBoard from "./(leaderBoard)";
 
 const CampaignPage = ({ params }: { params: { slug: string } }) => {
-  const wallet = "0x1234567890";
-  const { slug: campaignId } = params;
-  const campaign = data.filter((item) => item.id === campaignId)[0];
+  // const wallet = "0x1234567890";
+  // const { slug: campaignId } = params;
+  // const campaign = data.filter((item) => item.id === campaignId)[0];
 
-  const renderBt = () => {
-    if (campaign?.status === "open") {
-      return (
-        <div className="flex justify-center gap-5">
-          <Link href="/join-form">
-            <CampaignButton text="join" />
-          </Link>
-          <Link href={`/campaign/${campaignId}/proposals`}>
-            <CampaignButton text="vote" />
-          </Link>
-        </div>
-      );
-    }
-    if (campaign?.status === "closed" || campaign?.status === "comming") {
-      return null;
-    }
-  };
+  // const renderBt = () => {
+  //   if (campaign?.status === "open") {
+  //     return (
+  //       <div className="flex justify-center gap-5">
+  //         <Link href="/join-form">
+  //           <CampaignButton text="join" />
+  //         </Link>
+  //         <Link href={`/campaign/${campaignId}/proposals`}>
+  //           <CampaignButton text="vote" />
+  //         </Link>
+  //       </div>
+  //     );
+  //   }
+  //   if (campaign?.status === "closed" || campaign?.status === "comming") {
+  //     return null;
+  //   }
+  // };
 
-  if (campaign?.status === "closed") {
-    return <LeaderBoard campaignId={campaignId} />;
-  }
+  // if (campaign?.status === "closed") {
+  //   return <LeaderBoard campaignId={campaignId} />;
+  // }
   return (
     <main className="min-h-screen p-24 text-white">
-      <div className="grid gap-10">
+      {/* <div className="grid gap-10">
         <h1 className="font-bold text-transparent text-3xl bg-clip-text bg-gradient-to-tr from-font-pink via-font-blue to-pink">
           Campaign: {campaign?.title}
         </h1>
@@ -54,7 +54,7 @@ const CampaignPage = ({ params }: { params: { slug: string } }) => {
             <div>description : {campaign.description}</div>
           </div>
         </div>
-      </div>
+      </div> */}
     </main>
   );
 };

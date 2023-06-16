@@ -3,29 +3,29 @@ import JoinerCard from "../../(components)/JoinerCard";
 import { data } from "@/constants/mockup";
 
 const JoinerCampaign = ({ params }: { params: { slug: string } }) => {
-  const { slug } = params;
-  const campaign = data.filter((item) => item.id === slug)[0];
-  const names = [
-    "Alice",
-    "Bob",
-    "Charlie",
-    "David",
-    "Eve",
-    "Frank",
-    "Grace",
-    "Henry",
-    "Isabella",
-    "Jack",
-  ];
+  // const { slug } = params;
+  // const campaign = data.filter((item) => item.id === slug)[0];
+  // const names = [
+  //   "Alice",
+  //   "Bob",
+  //   "Charlie",
+  //   "David",
+  //   "Eve",
+  //   "Frank",
+  //   "Grace",
+  //   "Henry",
+  //   "Isabella",
+  //   "Jack",
+  // ];
 
-  const joiner = Array.from({ length: 10 }, () => ({
-    wallet: "0x" + Math.floor(Math.random() * 1000) + 1,
-    name: names[Math.floor(Math.random() * names.length)],
-  }));
+  // const joiner = Array.from({ length: 10 }, () => ({
+  //   wallet: "0x" + Math.floor(Math.random() * 1000) + 1,
+  //   name: names[Math.floor(Math.random() * names.length)],
+  // }));
 
   return (
     <main className="min-h-screen p-24 text-white">
-      <div className="text-white grid gap-5">
+      {/* <div className="text-white grid gap-5">
         <h1 className="font-bold text-transparent text-3xl bg-clip-text bg-gradient-to-tr from-font-pink via-font-blue to-pink">
           Campaign: {campaign.title}
         </h1>
@@ -34,7 +34,7 @@ const JoinerCampaign = ({ params }: { params: { slug: string } }) => {
             <JoinerCard key={index} wallet={item.wallet} name={item.name} />
           ))}
         </div>
-      </div>
+      </div> */}
     </main>
   );
 };
