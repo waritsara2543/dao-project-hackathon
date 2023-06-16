@@ -10,7 +10,7 @@ interface JoinerCardProps {
 const JoinerCard = ({ wallet, name }: JoinerCardProps) => {
   const campaignName = "New_test";
 
-  const status = "Vote";
+  const status = "open";
   return (
     <div className="flex bg-gradient-to-br from-[#1B3351]/30 to-[#9B6195]/30 w-full rounded-2xl">
       <div className="grid p-10 justify-center items-center gap-5 w-full max-w-lg text-center">

@@ -11,7 +11,7 @@ const CampaignPage = ({ params }: { params: { slug: string } }) => {
   const campaign = data.filter((item) => item.id === campaignId)[0];
 
   const renderBt = () => {
-    if (campaign.status === "open") {
+    if (campaign?.status === "open") {
       return (
         <div className="flex justify-center gap-5">
           <Link href="/join-form">
@@ -23,19 +23,19 @@ const CampaignPage = ({ params }: { params: { slug: string } }) => {
         </div>
       );
     }
-    if (campaign.status === "closed" || campaign.status === "comming") {
+    if (campaign?.status === "closed" || campaign?.status === "comming") {
       return null;
     }
   };
 
-  if (campaign.status === "closed") {
+  if (campaign?.status === "closed") {
     return <LeaderBoard campaignId={campaignId} />;
   }
   return (
     <main className="min-h-screen p-24 text-white">
       <div className="grid gap-10">
         <h1 className="font-bold text-transparent text-3xl bg-clip-text bg-gradient-to-tr from-font-pink via-font-blue to-pink">
-          Campaign: {campaign.title}
+          Campaign: {campaign?.title}
         </h1>
         <div className="grid bg-gradient-to-br from-[#1B3351]/30 to-[#9B6195]/30 w-full rounded-2xl">
           <div className="grid p-10 justify-center items-center gap-5 w-full text-center">
