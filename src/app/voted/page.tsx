@@ -16,7 +16,10 @@ const VotedPage = () => {
           {data.map(
             (item) =>
               item.status !== "comming" && (
-                <Link href={`/campaign/${item.id}`} key={item.id}>
+                <Link
+                  href={{ pathname: `/campaign`, query: { id: item.id } }}
+                  key={item.id}
+                >
                   <ClaimCard
                     id={item.id}
                     title={item.title}

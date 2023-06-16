@@ -7,7 +7,13 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="grid grid-cols-4 gap-10">
         {data.map((item) => (
-          <Link href={`/campaign/${item.id}`} key={item.id}>
+          <Link
+            key={item.id}
+            href={{
+              pathname: "/campaign",
+              query: { id: item.id },
+            }}
+          >
             <CampaignCard
               id={item.id}
               title={item.title}

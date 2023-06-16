@@ -22,7 +22,7 @@ const JoinerCard = ({ wallet, name }: JoinerCardProps) => {
           className="rounded-xl "
         />
         <div>wallet : {wallet}</div>
-        <CampaignButton text={status} />
+        <CampaignButton text={"vote"} />
       </div>
       <div className="flex flex-col p-10 gap-5 w-full">
         <div className="">{name}</div>

@@ -2,7 +2,7 @@ import { join } from "path";
 import React from "react";
 import Image from "next/image";
 import ContentCard from "@/components/contentCard/ContentCard";
-import { CampaignButton } from "../../(components)/CampaignBt";
+import { CampaignButton } from "../CampaignBt";
 import { data } from "@/constants/mockup";
 
 const LeaderBoard = ({ campaignId }: { campaignId: string }) => {

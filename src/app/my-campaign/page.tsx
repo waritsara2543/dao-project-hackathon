@@ -23,7 +23,10 @@ const MyCampaignPage = () => {
         <div className="w-full h-[1px] bg-gradient-to-r from-purple/0 from-5% via-pink via-40% to-purple/0 to-90% drop-shadow-md"></div>
         <div className="grid grid-cols-4 gap-10">
           {data.map((item) => (
-            <Link href={`/campaign/${item.id}`} key={item.id}>
+            <Link
+              href={{ pathname: `/campaign`, query: { id: item.id } }}
+              key={item.id}
+            >
               <CampaignCard
                 id={item.id}
                 title={item.title}
