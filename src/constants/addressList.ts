@@ -1,6 +1,7 @@
 const addressList: Record<string, `0x${string}`> = {
-  RewardToken: "0x075e87A9eE1d06fe670E9c9e62763863b9457D3B",
-  MyGovernor: "0x4cb0bbbd3a16bDd933a0B1Ad163a85e2AB45B6F9",
+  RewardToken: "0x89B7A97F3610Aab7Da907340742873D0d4026453",
+  MyGovernor: "0x1330028d78e97118E5b6BabeF5F5Ca652ab1543b",
+  DealClient: "0xc796E89D757119a8efC307a19Dd1E049FD376F8E",
 };
 
 const getAddress = (key: string) => {

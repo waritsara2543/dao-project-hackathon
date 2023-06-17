@@ -1,7 +1,7 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Select,
   SelectContent,
@@ -18,7 +18,6 @@ import { addDays, format } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { useContractWrite } from "wagmi";
 import addressList from "@/constants/addressList";
-import { parseEther } from "viem";
 import { MyGovernor__factory } from "@/typechain-types";
 
 const Form = () => {
@@ -26,13 +25,8 @@ const Form = () => {
   const [description, setDescription] = React.useState("");
   const [category, setCategory] = React.useState("");
   const [submitFileType, setSubmitFileType] = React.useState("");
-  const [submitDateRange, setSubmitDateRange] = React.useState<
-    DateRange | undefined
-  >({
-    from: new Date(),
-    to: addDays(new Date(), 20),
-  });
   const [closeDate, setCloseDate] = React.useState<Date>();
+  const [openDate, setOpenDate] = React.useState<Date>();
   const [amountPrize, setAmountPrize] = React.useState("");
 
   const { data, isLoading, isSuccess, write } = useContractWrite({
@@ -40,12 +34,13 @@ const Form = () => {
     abi: MyGovernor__factory.abi,
     functionName: "createCampaign",
     args: [
-      "test",
-      parseEther("1000"),
-      parseEther("1638352800"),
-      parseEther("1638871200"),
+      description,
+      BigInt(amountPrize),
+      BigInt(openDate ? (new Date(openDate).getTime() / 1000).toString() : 0),
+      BigInt(closeDate ? (new Date(closeDate).getTime() / 1000).toString() : 0),
     ],
   });
+
   return (
     <div className="bg-gradient-to-br from-secondary-blue/50 to-secondary-pink/50 grid gap-10 p-10 rounded-lg">
       <div className="grid grid-cols-4 items-center">
@@ -114,12 +109,9 @@ const Form = () => {
         </Select>
       </div>
       <div className="grid grid-cols-4 items-center">
-        <p>Submitting date :</p>
+        <p>Open date :</p>
         <div className="col-span-3">
-          <DatePickerWithRange
-            date={submitDateRange}
-            setDate={setSubmitDateRange}
-          />
+          <DatePicker date={openDate} setDate={setOpenDate} />
         </div>
       </div>
       <div className="grid grid-cols-4 items-center">

@@ -15,7 +15,7 @@ const JoinedPage = () => {
         <div className="grid grid-cols-4 gap-10">
           {data.map(
             (item) =>
-              item.status !== "comming" && (
+              item.status !== "coming" && (
                 <Link
                   href={{ pathname: `/campaign`, query: { id: item.id } }}
                   key={item.id}

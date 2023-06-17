@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as openzeppelin from "./@openzeppelin";
+export * as zondax from "./@zondax";
 export * as contracts from "./contracts";

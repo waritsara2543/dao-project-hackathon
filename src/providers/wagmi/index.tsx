@@ -31,7 +31,7 @@ export const bitkubChainTestnet: Chain = {
 };
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [bitkubChainTestnet],
+  [filecoinCalibration],
   [publicProvider()]
 );
 

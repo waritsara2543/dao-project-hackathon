@@ -1,68 +1,16 @@
-import Image from "next/image";
 import React from "react";
-import { CampaignButton } from "./(components)/CampaignBt";
-import Link from "next/link";
-import { data } from "@/constants/mockup";
-import LeaderBoard from "./(components)/(leaderBoard)";
+import RenderPage from "./(components)/rederPage";
+import JoinerData from "./(components)/joinerData";
 
-const CampaignPage = ({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string };
-}) => {
-  const wallet = "0x1234567890";
-  const campaignId = searchParams.id;
-  const campaign = data.filter((item) => item.id === campaignId)[0];
-
-  const renderBt = () => {
-    if (campaign.status === "open") {
-      return (
-        <div className="flex justify-center gap-5">
-          <Link href="/join-form">
-            <CampaignButton text="join" />
-          </Link>
-          <Link
-            href={{
-              pathname: `proposals`,
-              query: { id: campaignId },
-            }}
-          >
-            <CampaignButton text="vote" />
-          </Link>
-        </div>
-      );
-    }
-    if (campaign.status === "closed" || campaign.status === "comming") {
-      return null;
-    }
-  };
-
-  if (campaign.status === "closed") {
-    return <LeaderBoard campaignId={campaignId} />;
-  }
+const CampaignPage = () => {
   return (
     <main className="min-h-screen p-24 text-white">
-      <div className="grid gap-10">
+      <RenderPage />
+      <div className="grid gap-10 pt-5">
         <h1 className="font-bold text-transparent text-3xl bg-clip-text bg-gradient-to-tr from-font-pink via-font-blue to-pink">
-          Campaign: {campaign.title}
+          Participants
         </h1>
-        <div className="grid bg-gradient-to-br from-[#1B3351]/30 to-[#9B6195]/30 w-full rounded-2xl">
-          <div className="grid p-10 justify-center items-center gap-5 w-full text-center">
-            <Image
-              src="/assets/squirrel.png"
-              alt="Picture of the author"
-              width={300}
-              height={300}
-              className="rounded-xl "
-            />
-            <div>wallet : {wallet}</div>
-            {renderBt()}
-          </div>
-          <div className="flex flex-col p-10 gap-5 w-full">
-            <div className="">{campaign.title}</div>
-            <div>description : {campaign.description}</div>
-          </div>
-        </div>
+        <JoinerData />
       </div>
     </main>
   );

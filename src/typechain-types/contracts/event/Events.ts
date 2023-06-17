@@ -22,32 +22,33 @@ export interface EventsInterface extends utils.Interface {
   functions: {};
 
   events: {
-    "ProposalCreated(uint256,address,string,uint256)": EventFragment;
+    "EventProposalCreated(uint256,address,string,uint256)": EventFragment;
     "RewardsDistributed(uint256,uint256,uint256,uint256)": EventFragment;
     "VoteRecorded(uint256,address,uint256,uint256)": EventFragment;
     "Voted(uint256,address)": EventFragment;
     "WorkSubmitted(bytes,uint256,address,string)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "ProposalCreated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EventProposalCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RewardsDistributed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "VoteRecorded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Voted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "WorkSubmitted"): EventFragment;
 }
 
-export interface ProposalCreatedEventObject {
+export interface EventProposalCreatedEventObject {
   proposalId: BigNumber;
   creator: string;
   description: string;
   rewardAmount: BigNumber;
 }
-export type ProposalCreatedEvent = TypedEvent<
+export type EventProposalCreatedEvent = TypedEvent<
   [BigNumber, string, string, BigNumber],
-  ProposalCreatedEventObject
+  EventProposalCreatedEventObject
 >;
 
-export type ProposalCreatedEventFilter = TypedEventFilter<ProposalCreatedEvent>;
+export type EventProposalCreatedEventFilter =
+  TypedEventFilter<EventProposalCreatedEvent>;
 
 export interface RewardsDistributedEventObject {
   proposalId: BigNumber;
@@ -128,18 +129,18 @@ export interface Events extends BaseContract {
   callStatic: {};
 
   filters: {
-    "ProposalCreated(uint256,address,string,uint256)"(
+    "EventProposalCreated(uint256,address,string,uint256)"(
       proposalId?: null,
       creator?: null,
       description?: null,
       rewardAmount?: null
-    ): ProposalCreatedEventFilter;
-    ProposalCreated(
+    ): EventProposalCreatedEventFilter;
+    EventProposalCreated(
       proposalId?: null,
       creator?: null,
       description?: null,
       rewardAmount?: null
-    ): ProposalCreatedEventFilter;
+    ): EventProposalCreatedEventFilter;
 
     "RewardsDistributed(uint256,uint256,uint256,uint256)"(
       proposalId?: null,

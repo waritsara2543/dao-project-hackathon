@@ -1,25 +1,27 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import React from "react";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { DatePickerWithRange } from "@/components/createCampaign/dateRange";
-import { DatePicker } from "@/components/createCampaign/dateInput";
 import { Button } from "@/components/ui/button";
-import { addDays, format } from "date-fns";
-import { DateRange } from "react-day-picker";
+import { Textarea } from "../ui/textarea";
+import { useAccount, useContractWrite } from "wagmi";
+import addressList from "@/constants/addressList";
+import { MyGovernor__factory } from "@/typechain-types";
+import { useSearchParams } from "next/navigation";
 
 const Form = () => {
+  const searchParams = useSearchParams();
+  const campaignId = searchParams.get("id");
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const { address } = useAccount();
+  const cid = "0x1234567890";
+  const { data, isLoading, isSuccess, write } = useContractWrite({
+    address: addressList.getAddress("MyGovernor"),
+    abi: MyGovernor__factory.abi,
+    functionName: "submitWork",
+    args: [cid, BigInt(campaignId as string), description, address!],
+  });
 
   return (
     <div className="bg-gradient-to-br from-secondary-blue/50 to-secondary-pink/50 grid gap-10 p-10 rounded-lg">
@@ -46,14 +48,29 @@ const Form = () => {
         />
       </div>
       <div className="grid grid-cols-4 items-center">
+        <p>Description :</p>
+        <Textarea
+          className="col-span-3"
+          value={description}
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
+        />
+      </div>
+      <div className="grid grid-cols-4 items-center">
         <p>Contribution :</p>
         <Input id="contribution" type="file" className="col-span-3" />
       </div>
 
       <div className="flex justify-center">
-        <Button className="bg-gradient-to-r from-purple to-font-pink px-8">
+        <Button
+          className="bg-gradient-to-r from-purple to-font-pink px-8"
+          onClick={() => write()}
+        >
           Submit
         </Button>
+        {isLoading && <div>Check Wallet</div>}
+        {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
       </div>
     </div>
   );

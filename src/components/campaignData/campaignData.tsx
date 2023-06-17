@@ -1,15 +1,23 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import CampaignCard from "../campaignCard";
-import { useGetCampaign } from "@/hooks/useGetCampaign";
+import { Campaign, useGetCampaign } from "@/hooks/useGetCampaign";
 
-const CampaignData = () => {
-  const { allCampaign } = useGetCampaign();
+const CampaignData = ({ isAll }: { isAll: boolean }) => {
+  const { allCampaign, myCampaign } = useGetCampaign();
+  const [data, setData] = React.useState<Array<Campaign>>([] as any);
 
+  useEffect(() => {
+    if (isAll) {
+      setData(allCampaign);
+    } else {
+      setData(myCampaign);
+    }
+  }, [isAll, allCampaign, myCampaign]);
   return (
-    <div>
-      {allCampaign?.map((item, index) => (
+    <div className="grid grid-cols-4 gap-10">
+      {data?.map((item, index) => (
         <Link
           key={index}
           href={{
@@ -22,7 +30,7 @@ const CampaignData = () => {
             title={"title"}
             description={"description"}
             image={"/assets/campaign.png"}
-            status={"open"}
+            status={item.status}
           />
         </Link>
       ))}

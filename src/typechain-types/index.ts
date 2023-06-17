@@ -3,6 +3,8 @@
 /* eslint-disable */
 import type * as openzeppelin from "./@openzeppelin";
 export type { openzeppelin };
+import type * as zondax from "./@zondax";
+export type { zondax };
 import type * as contracts from "./contracts";
 export type { contracts };
 export * as factories from "./factories";
@@ -60,9 +62,17 @@ export type { ShortStrings } from "./@openzeppelin/contracts/utils/ShortStrings"
 export { ShortStrings__factory } from "./factories/@openzeppelin/contracts/utils/ShortStrings__factory";
 export type { DoubleEndedQueue } from "./@openzeppelin/contracts/utils/structs/DoubleEndedQueue";
 export { DoubleEndedQueue__factory } from "./factories/@openzeppelin/contracts/utils/structs/DoubleEndedQueue__factory";
+export type { Actor } from "./@zondax/filecoin-solidity/contracts/v0.8/utils/Actor";
+export { Actor__factory } from "./factories/@zondax/filecoin-solidity/contracts/v0.8/utils/Actor__factory";
+export type { BigInts } from "./@zondax/filecoin-solidity/contracts/v0.8/utils/BigInts";
+export { BigInts__factory } from "./factories/@zondax/filecoin-solidity/contracts/v0.8/utils/BigInts__factory";
+export type { FilAddresses } from "./@zondax/filecoin-solidity/contracts/v0.8/utils/FilAddresses";
+export { FilAddresses__factory } from "./factories/@zondax/filecoin-solidity/contracts/v0.8/utils/FilAddresses__factory";
+export type { MyToken } from "./contracts/Ape.sol/MyToken";
+export { MyToken__factory } from "./factories/contracts/Ape.sol/MyToken__factory";
+export type { DealClient } from "./contracts/DealClient";
+export { DealClient__factory } from "./factories/contracts/DealClient__factory";
 export type { Events } from "./contracts/event/Events";
 export { Events__factory } from "./factories/contracts/event/Events__factory";
-export type { RewardToken } from "./contracts/RewardToken";
-export { RewardToken__factory } from "./factories/contracts/RewardToken__factory";
 export type { MyGovernor } from "./contracts/Votes.sol/MyGovernor";
 export { MyGovernor__factory } from "./factories/contracts/Votes.sol/MyGovernor__factory";

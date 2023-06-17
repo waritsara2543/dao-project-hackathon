@@ -13,7 +13,7 @@ export interface CampaignCardProps {
   title: string;
   description: string;
   image: string;
-  status: "open" | "closed" | "comming";
+  status: "open" | "closed" | "coming";
 }
 const CampaignCard = ({
   id,
@@ -37,7 +37,7 @@ const CampaignCard = ({
         </div>
       );
     }
-    if (status === "comming") {
+    if (status === "coming") {
       return (
         <div className="absolute right-2 -top-4 rounded-full h-10 w-10 bg-gradient-to-r from-pink to-purple to-50% flex items-center">
           <MegaphoneIcon className="h-6 w-6 text-white mx-auto" />
@@ -64,15 +64,18 @@ const CampaignCard = ({
         </p>
         {status === "open" ? (
           <div className="w-full flex gap-4">
-            <Link href="/join-form" className="w-full">
+            <Link
+              href={{ pathname: "/join-form", query: { id: id } }}
+              className="w-full"
+            >
               <CampaignButton text="join" />
             </Link>
-            <Link
+            {/* <Link
               href={{ pathname: `/proposals`, query: { id: id } }}
               className="w-full"
             >
               <CampaignButton text="vote" />
-            </Link>
+            </Link> */}
           </div>
         ) : (
           <div className="h-7"></div>

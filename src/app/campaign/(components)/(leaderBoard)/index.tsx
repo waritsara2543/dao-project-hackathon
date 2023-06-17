@@ -5,7 +5,7 @@ import ContentCard from "@/components/contentCard/ContentCard";
 import { CampaignButton } from "../CampaignBt";
 import { data } from "@/constants/mockup";
 
-const LeaderBoard = ({ campaignId }: { campaignId: string }) => {
+const LeaderBoard = ({ campaignId }: { campaignId: string | undefined }) => {
   const campaign = data.filter((item) => item.id === campaignId)[0];
   const names = [
     "Alice",
