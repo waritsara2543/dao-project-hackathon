@@ -1,7 +1,7 @@
 "use client";
 import { useGetProposal } from "@/hooks/useGetProposal";
 import React from "react";
-import JoinerCard from "./JoinerCard";
+import JoinerCard from "../JoinerCard";
 import { useSearchParams } from "next/navigation";
 
 const JoinerData = () => {
@@ -10,13 +10,14 @@ const JoinerData = () => {
   const { proposals } = useGetProposal(campaignId as string);
 
   return (
-    <div>
-      {proposals.map((item: any, index) => (
-        <div key={index}>
+    <div className="grid gap-10">
+      {proposals.map((item: any) => (
+        <div key={item.id}>
           <JoinerCard
             wallet={item.creator}
             name={"name"}
             description={item.description}
+            id={item.id}
           />
         </div>
       ))}

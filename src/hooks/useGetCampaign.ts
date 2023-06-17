@@ -11,6 +11,7 @@ export interface Campaign {
   rewardAmount: number;
   isOwner: boolean;
   status: "coming" | "open" | "closed";
+  proposals: Array<number>;
 }
 export const useGetCampaign = () => {
   const { data, isError, isLoading } = useContractRead({
@@ -27,20 +28,21 @@ export const useGetCampaign = () => {
   const allCampaign = useMemo(() => {
     const result: Array<Campaign> = [];
     if (data)
-      for (let i = 0; i < data.length; i++) {
+      data.forEach((campaign: any) => {
         result.push({
-          campaignId: Number(data[i].campaignId),
-          creator: data[i].creator,
-          endBlock: dateformatter(Number(data[i].endBlock)),
-          startBlock: dateformatter(Number(data[i].startBlock)),
-          rewardAmount: Number(data[i].rewardAmount),
-          isOwner: data[i].creator === address,
+          campaignId: Number(campaign.campaignId),
+          creator: campaign.creator,
+          endBlock: dateformatter(Number(campaign.endBlock)),
+          startBlock: dateformatter(Number(campaign.startBlock)),
+          rewardAmount: Number(campaign.rewardAmount),
+          isOwner: campaign.creator === address,
           status: checkStatus(
-            Number(data[i].startBlock),
-            Number(data[i].endBlock)
+            Number(campaign.startBlock),
+            Number(campaign.endBlock)
           ),
+          proposals: campaign.proposalId,
         });
-      }
+      });
     console.log(result);
 
     return result;

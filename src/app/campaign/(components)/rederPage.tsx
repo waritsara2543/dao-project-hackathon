@@ -7,6 +7,7 @@ import { CampaignButton } from "./CampaignBt";
 import LeaderBoard from "./(leaderBoard)";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
+import JoinerData from "./joinerData";
 
 const RenderPage = () => {
   const { allCampaign } = useGetCampaign();
@@ -62,6 +63,13 @@ const RenderPage = () => {
           <div className="">{campaign?.title}</div>
           <div>description : {campaign?.description}</div>
         </div>
+      </div>
+
+      <div className="grid gap-10 pt-5">
+        <h1 className="font-bold text-transparent text-3xl bg-clip-text bg-gradient-to-tr from-font-pink via-font-blue to-pink">
+          Participants
+        </h1>
+        <JoinerData />
       </div>
     </div>
   );

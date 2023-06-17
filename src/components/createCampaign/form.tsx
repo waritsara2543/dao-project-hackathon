@@ -40,6 +40,12 @@ const Form = () => {
       BigInt(closeDate ? (new Date(closeDate).getTime() / 1000).toString() : 0),
     ],
   });
+  useEffect(() => {
+    const startTimestamp = Math.floor(Date.now() / 1000);
+
+    if (openDate) console.log((new Date(openDate).getTime() / 1000).toString());
+    console.log("startTimestamp", startTimestamp);
+  }, [openDate]);
 
   return (
     <div className="bg-gradient-to-br from-secondary-blue/50 to-secondary-pink/50 grid gap-10 p-10 rounded-lg">
