@@ -15,6 +15,9 @@ const CampaignData = ({ isAll }: { isAll: boolean }) => {
       setData(myCampaign);
     }
   }, [isAll, allCampaign, myCampaign]);
+
+  console.log("data", data);
+
   return (
     <div className="grid grid-cols-4 gap-10">
       {data?.map((item, index) => (
@@ -23,8 +26,7 @@ const CampaignData = ({ isAll }: { isAll: boolean }) => {
           href={{
             pathname: "/campaign",
             query: { id: Number(item.campaignId) },
-          }}
-        >
+          }}>
           <CampaignCard
             id={String(Number(item.campaignId))}
             title={"title"}

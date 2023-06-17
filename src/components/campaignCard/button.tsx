@@ -5,7 +5,7 @@ interface CampaignButtonProps {
 }
 export function CampaignButton({ text }: CampaignButtonProps) {
   return (
-    <Button className="py-1 w-full h-fit bg-gradient-to-b from-blue/0 from-5%  via-blue via-30% to-blue/22 to-90% rounded-full capitalize">
+    <Button className="w-full rounded-2xl bg-gradient-to-r from-pink to-purple hover:from-font-pink  capitalize">
       {text}
     </Button>
   );

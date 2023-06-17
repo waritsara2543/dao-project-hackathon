@@ -7,22 +7,10 @@ import { useAccount, useContractWrite } from "wagmi";
 import addressList from "@/constants/addressList";
 import { MyGovernor__factory } from "@/typechain-types";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { DatePickerWithRange } from "@/components/createCampaign/dateRange";
-import { DatePicker } from "@/components/createCampaign/dateInput";
-import { addDays, format, set } from "date-fns";
-import { DateRange } from "react-day-picker";
 import { Web3Storage } from "web3.storage";
 import { auth, db } from "@/utils/polybaseClient";
 import { nanoid } from "nanoid/non-secure";
+import toast, { Toaster } from "react-hot-toast";
 
 // const ipfs = await IPFS.create();
 
@@ -44,7 +32,6 @@ const Form = () => {
   const [file, setFile] = React.useState<any>(null);
   const [uploading, setUploading] = React.useState(false);
   const [authState, setAuthState] = React.useState<any>(null);
-  const [user, setUser] = React.useState<any>(null);
 
   const handleFileSelect = (e: any) => {
     const files = e.target.files;
@@ -56,7 +43,9 @@ const Form = () => {
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
     if (!file || !name || !email || !description) {
-      alert("Please fill all the fields");
+      toast("Please fill all the fields", {
+        duration: 6000,
+      });
       return;
     }
     setUploading(true);
@@ -73,7 +62,7 @@ const Form = () => {
       return;
     }
     setUploading(false);
-    router.push(`/joined`);
+    return router.push(`/joined`);
   };
 
   async function createRecord(cid: string) {
