@@ -2,6 +2,7 @@ import Navbar from "@/components/navbar";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import RootProvider from "./providers";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body className="bg-gradient-to-b from-black to-dark-blue bg-cover">
         <RootProvider>
           <Navbar />
+          <Toaster />
           {children}
         </RootProvider>
       </body>

@@ -5,34 +5,49 @@ import addressList from "@/constants/addressList";
 import { MyGovernor__factory } from "@/typechain-types";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import toast from "react-hot-toast";
+import { useGetProposal } from "@/hooks/useGetProposal";
 
 const Voted = ({ id }: { id: string }) => {
   const searchParams = useSearchParams();
   const campaignId = searchParams.get("id");
   const { address } = useAccount();
-  const { data, isLoading, isSuccess, write, error } = useContractWrite({
+  const { myVoted } = useGetProposal(campaignId as any);
+  const [isVoted, setIsVoted] = React.useState(false);
+  const { data, isLoading, isSuccess, write } = useContractWrite({
     address: addressList.getAddress("MyGovernor"),
     abi: MyGovernor__factory.abi,
     functionName: "vote",
     args: [BigInt(id), address!, BigInt(campaignId as string)],
+    onSuccess: (data) => {
+      toast.success(`Successfully created`, {
+        duration: 10000,
+      });
+    },
+    onError: (error) => {
+      toast.error(`Error! ${error}`, {
+        duration: 10000,
+      });
+    },
   });
   useEffect(() => {
-    if (error) {
-      console.log(error);
-    }
-  }, []);
+    myVoted.map((item) => {
+      if (item.campaignId == Number(campaignId)) {
+        setIsVoted(true);
+      }
+    });
+  }, [campaignId, myVoted]);
   return (
     <div>
       <Button
-        className="w-full py-1 px-10 h-10 bg-[#2F80ED] rounded-full capitalize"
+        className="w-full py-1 px-10 h-10 bg-[#2F80ED] rounded-full capitalize disabled:bg-gray disabled:cursor-not-allowed"
         onClick={() => {
           write();
         }}
+        disabled={isVoted}
       >
-        vote
+        {isLoading ? "Loading..." : "Vote"}
       </Button>
-      {isLoading && <div>Check Wallet</div>}
-      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
     </div>
   );
 };

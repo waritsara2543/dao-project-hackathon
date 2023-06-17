@@ -11,14 +11,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DatePickerWithRange } from "@/components/createCampaign/dateRange";
 import { DatePicker } from "@/components/createCampaign/dateInput";
 import { Button } from "@/components/ui/button";
-import { addDays, format } from "date-fns";
-import { DateRange } from "react-day-picker";
-import { useContractWrite } from "wagmi";
+import { useAccount, useContractRead, useContractWrite } from "wagmi";
 import addressList from "@/constants/addressList";
-import { MyGovernor__factory } from "@/typechain-types";
+import { MyGovernor__factory, MyToken__factory } from "@/typechain-types";
+import { parseEther } from "viem";
+import toast from "react-hot-toast";
+import { on } from "events";
 
 const Form = () => {
   const [title, setTitle] = React.useState("");
@@ -28,24 +28,56 @@ const Form = () => {
   const [closeDate, setCloseDate] = React.useState<Date>();
   const [openDate, setOpenDate] = React.useState<Date>();
   const [amountPrize, setAmountPrize] = React.useState("");
+  const { address } = useAccount();
+  const databaseId = "1";
 
-  const { data, isLoading, isSuccess, write } = useContractWrite({
+  const { write, isLoading } = useContractWrite({
     address: addressList.getAddress("MyGovernor"),
     abi: MyGovernor__factory.abi,
     functionName: "createCampaign",
     args: [
+      databaseId,
       description,
-      BigInt(amountPrize),
+      parseEther(amountPrize as any),
       BigInt(openDate ? (new Date(openDate).getTime() / 1000).toString() : 0),
       BigInt(closeDate ? (new Date(closeDate).getTime() / 1000).toString() : 0),
     ],
+    onSuccess: (data) => {
+      toast.success(`Successfully created`, {
+        duration: 10000,
+      });
+    },
+    onError: (error) => {
+      toast.error(`Error! ${error}`, {
+        duration: 10000,
+      });
+    },
   });
-  useEffect(() => {
-    const startTimestamp = Math.floor(Date.now() / 1000);
 
-    if (openDate) console.log((new Date(openDate).getTime() / 1000).toString());
-    console.log("startTimestamp", startTimestamp);
-  }, [openDate]);
+  const { write: approve, isLoading: approveLoading } = useContractWrite({
+    address: addressList.getAddress("RewardToken"),
+    abi: MyToken__factory.abi,
+    functionName: "approve",
+    args: [addressList.getAddress("MyGovernor"), BigInt(amountPrize)],
+    onSuccess: (data) => {
+      toast.success(`Successfully approve!`, {
+        duration: 10000,
+      });
+    },
+    onError: (error) => {
+      toast.error(`Error! ${error}`, {
+        duration: 10000,
+      });
+    },
+  });
+
+  const { data: allowance } = useContractRead({
+    address: addressList.getAddress("RewardToken"),
+    abi: MyToken__factory.abi,
+    functionName: "allowance",
+    enabled: !!address,
+    args: [address as any, addressList.getAddress("MyGovernor")],
+  });
 
   return (
     <div className="bg-gradient-to-br from-secondary-blue/50 to-secondary-pink/50 grid gap-10 p-10 rounded-lg">
@@ -143,12 +175,16 @@ const Form = () => {
       <div className="flex justify-center">
         <Button
           className="bg-gradient-to-r from-purple to-font-pink px-8"
-          onClick={() => write()}
+          onClick={() => {
+            Number(allowance) !== 0 ? write() : approve();
+          }}
         >
-          Submit
+          {isLoading || approveLoading
+            ? "Loading... "
+            : Number(allowance) !== 0
+            ? "Submit"
+            : "Approve"}
         </Button>
-        {isLoading && <div>Check Wallet</div>}
-        {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
       </div>
     </div>
   );

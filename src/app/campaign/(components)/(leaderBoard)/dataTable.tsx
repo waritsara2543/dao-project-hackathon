@@ -18,8 +18,8 @@ const DataTable = () => {
   const { sortedProposals } = useGetProposal(campaignId as string);
 
   return (
-    <Table>
-      <TableHeader className="h-20 px-10 items-center bg-gradient-to-br from-[#1B3351] to-[#9B6195]">
+    <Table className="rounded-t-2xl">
+      <TableHeader className="h-20 px-10 items-center bg-gradient-to-br from-[#1B3351] to-[#9B6195] rounded-t-2xl">
         <TableRow className="text-white">
           <TableHead className="w-[100px] text-white">Number</TableHead>
           <TableHead className="text-white">Wallet</TableHead>

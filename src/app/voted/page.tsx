@@ -1,7 +1,5 @@
-import ClaimCard from "@/components/claimCard";
-import { data } from "@/constants/mockup";
 import React from "react";
-import Link from "next/link";
+import VotedData from "./votedData";
 
 const VotedPage = () => {
   return (
@@ -12,26 +10,7 @@ const VotedPage = () => {
         </h1>
 
         <div className="w-full h-[1px] bg-gradient-to-r from-purple/0 from-5% via-pink via-40% to-purple/0 to-90% drop-shadow-md"></div>
-        <div className="grid grid-cols-4 gap-10">
-          {data.map(
-            (item) =>
-              item.status !== "coming" && (
-                <Link
-                  href={{ pathname: `/campaign`, query: { id: item.id } }}
-                  key={item.id}
-                >
-                  <ClaimCard
-                    id={item.id}
-                    title={item.title}
-                    description={item.description}
-                    image={item.image}
-                    status={item.status}
-                    claim="claim"
-                  />
-                </Link>
-              )
-          )}
-        </div>
+        <VotedData />
       </div>
     </main>
   );

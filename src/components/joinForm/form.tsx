@@ -7,6 +7,7 @@ import { useAccount, useContractWrite } from "wagmi";
 import addressList from "@/constants/addressList";
 import { MyGovernor__factory } from "@/typechain-types";
 import { useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Form = () => {
   const searchParams = useSearchParams();
@@ -21,6 +22,16 @@ const Form = () => {
     abi: MyGovernor__factory.abi,
     functionName: "submitWork",
     args: [cid, BigInt(campaignId as string), description, address!],
+    onSuccess: (data) => {
+      toast.success(`Successfully created`, {
+        duration: 10000,
+      });
+    },
+    onError: (error) => {
+      toast.error(`Error! ${error}`, {
+        duration: 10000,
+      });
+    },
   });
 
   return (
@@ -67,10 +78,8 @@ const Form = () => {
           className="bg-gradient-to-r from-purple to-font-pink px-8"
           onClick={() => write()}
         >
-          Submit
+          {isLoading ? "Loading..." : "Submit"}
         </Button>
-        {isLoading && <div>Check Wallet</div>}
-        {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
       </div>
     </div>
   );

@@ -4,14 +4,15 @@ import { useMemo } from "react";
 import { useAccount, useContractRead, useContractReads } from "wagmi";
 import { Campaign, useGetCampaign } from "./useGetCampaign";
 
-export const useGetProposal = (campaignId: string) => {
+export const useGetProposal = (campaignId?: string) => {
   const { allCampaign } = useGetCampaign();
   const { address } = useAccount();
   const { data, isError, isLoading } = useContractRead({
     address: addressList.getAddress("MyGovernor"),
     abi: MyGovernor__factory.abi,
     functionName: "getProposalsInCampaign",
-    args: [BigInt(campaignId as string)],
+    enabled: !!campaignId,
+    args: [BigInt(campaignId || 0)],
   });
   const contractList = useMemo(() => {
     const result: any = [];
@@ -76,5 +77,25 @@ export const useGetProposal = (campaignId: string) => {
     return result;
   }, [proposals]);
 
-  return { proposals, myJoin, sortedProposals };
+  const myVoted = useMemo(() => {
+    if (!datas) return [];
+    const voted: Array<Campaign> = [];
+    datas.forEach((data: any) => {
+      data.result.forEach((result: any) => {
+        allCampaign.forEach((campaign: any) => {
+          campaign.proposals.forEach((proposal: any) => {
+            if (proposal === result.proposalId) {
+              if (result.voters.includes(address))
+                if (!voted.includes(campaign)) voted.push(campaign);
+            }
+          });
+        });
+      });
+    });
+    console.log("myVoted", voted);
+
+    return voted;
+  }, [address, datas, allCampaign]);
+
+  return { proposals, myJoin, sortedProposals, myVoted };
 };

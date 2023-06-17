@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { CampaignButton } from "../campaignCard/button";
 import {
@@ -6,7 +7,10 @@ import {
   FlagIcon,
   MegaphoneIcon,
 } from "@heroicons/react/24/outline";
-import Link from "next/link";
+import addressList from "@/constants/addressList";
+import { MyGovernor__factory } from "@/typechain-types";
+import { useAccount, useContractWrite } from "wagmi";
+import { useGetProposal } from "@/hooks/useGetProposal";
 
 export interface ClaimCardProps {
   id: string;
@@ -15,6 +19,7 @@ export interface ClaimCardProps {
   image: string;
   status: "open" | "closed";
   claim: "claim" | "claimed" | "none";
+  page: "my-joined" | "my-voted";
 }
 const ClaimCard = ({
   id,
@@ -23,7 +28,16 @@ const ClaimCard = ({
   image,
   status,
   claim,
+  page,
 }: ClaimCardProps) => {
+  const { sortedProposals } = useGetProposal(id);
+  const { address } = useAccount();
+  const { data, isLoading, isSuccess, write } = useContractWrite({
+    address: addressList.getAddress("MyGovernor"),
+    abi: MyGovernor__factory.abi,
+    functionName: "claimRewards",
+    args: [BigInt(id), address as `0x${string}`, BigInt(sortedProposals[0].id)],
+  });
   const renderStatus = () => {
     if (status === "open") {
       return (
@@ -57,8 +71,17 @@ const ClaimCard = ({
         <p className="text-xs h-20 overflow-ellipsis overflow-hidden">
           {description}
         </p>
-        {status === "closed" && claim === "claim" ? (
-          <CampaignButton text="claim" />
+        {status === "closed" &&
+        claim === "claim" &&
+        ((page === "my-joined" && address === sortedProposals[0].creator) ||
+          (page === "my-voted" &&
+            sortedProposals[0].voters.includes(address))) ? (
+          <CampaignButton
+            text="claim"
+            onclick={() => {
+              write();
+            }}
+          />
         ) : claim === "claimed" ? (
           <CampaignButton text="claimed" />
         ) : (
