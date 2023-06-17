@@ -32,7 +32,7 @@ const Voted = ({ id }: { id: string }) => {
   });
   useEffect(() => {
     myVoted.map((item) => {
-      if (item.campaignId == Number(campaignId)) {
+      if (item.campaignId == campaignId) {
         setIsVoted(true);
       }
     });

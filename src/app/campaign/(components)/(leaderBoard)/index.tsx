@@ -7,7 +7,7 @@ import { useGetCampaign } from "@/hooks/useGetCampaign";
 const LeaderBoard = ({ campaignId }: { campaignId: string | undefined }) => {
   const { allCampaign } = useGetCampaign();
   const campaign = allCampaign.filter(
-    (item) => item.campaignId === Number(campaignId)
+    (item) => item.campaignId === campaignId
   )[0];
   return (
     <div className="flex flex-col">

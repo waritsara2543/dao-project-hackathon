@@ -4,7 +4,7 @@ import { useEffect, useMemo } from "react";
 import { parseEther } from "viem";
 import { useAccount, useContractRead } from "wagmi";
 export interface Campaign {
-  campaignId: number;
+  campaignId: string;
   creator: string;
   endBlock: string;
   startBlock: string;
@@ -30,7 +30,7 @@ export const useGetCampaign = () => {
     if (data)
       data.forEach((campaign: any) => {
         result.push({
-          campaignId: Number(campaign.campaignId),
+          campaignId: campaign.campaignId,
           creator: campaign.creator,
           endBlock: dateformatter(Number(campaign.endBlock)),
           startBlock: dateformatter(Number(campaign.startBlock)),

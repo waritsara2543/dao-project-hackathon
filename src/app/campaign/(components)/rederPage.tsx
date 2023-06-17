@@ -16,7 +16,7 @@ const RenderPage = () => {
   const campaignId = searchParams.get("id");
   useEffect(() => {
     setCampaign(
-      allCampaign.filter((item) => item.campaignId === Number(campaignId))[0]
+      allCampaign.filter((item) => item.campaignId === campaignId)[0]
     );
   }, [allCampaign, campaignId]);
 
