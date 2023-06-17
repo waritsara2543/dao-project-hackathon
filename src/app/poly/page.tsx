@@ -64,6 +64,8 @@ const Page = () => {
     getUsers();
   }, []);
 
+  console.log("authState", authState);
+
   return (
     <div className="flex min-h-screen flex-col items-center  p-24">
       <div className="flex flex-col">
