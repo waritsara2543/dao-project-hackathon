@@ -46,8 +46,6 @@ export const useGetProposal = (campaignId?: string) => {
         });
       });
     });
-    console.log("myJoin", joined);
-
     return joined;
   }, [datas, address, allCampaign]);
 
@@ -63,9 +61,6 @@ export const useGetProposal = (campaignId?: string) => {
         score: proposal.voters.length,
       } as any);
     });
-
-    console.log("proposals", result);
-
     return result;
   }, [data]);
 
@@ -92,8 +87,6 @@ export const useGetProposal = (campaignId?: string) => {
         });
       });
     });
-    console.log("myVoted", voted);
-
     return voted;
   }, [address, datas, allCampaign]);
 

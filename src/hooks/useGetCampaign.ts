@@ -20,11 +20,6 @@ export const useGetCampaign = () => {
     functionName: "getAllCampaigns",
   });
   const { address } = useAccount();
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
   const allCampaign = useMemo(() => {
     const result: Array<Campaign> = [];
     if (data)
@@ -43,8 +38,6 @@ export const useGetCampaign = () => {
           proposals: campaign.proposalId,
         });
       });
-    console.log(result);
-
     return result;
   }, [data, address]);
 
