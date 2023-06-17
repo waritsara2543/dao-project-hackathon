@@ -1,12 +1,12 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import React from "react";
+import React, { use, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "../ui/textarea";
 import { useAccount, useContractWrite } from "wagmi";
 import addressList from "@/constants/addressList";
 import { MyGovernor__factory } from "@/typechain-types";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Select,
   SelectContent,
@@ -21,11 +21,14 @@ import { DatePicker } from "@/components/createCampaign/dateInput";
 import { addDays, format, set } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { Web3Storage } from "web3.storage";
+import { auth, db } from "@/utils/polybaseClient";
+import { nanoid } from "nanoid/non-secure";
 
 // const ipfs = await IPFS.create();
 
 const Form = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const campaignId = searchParams.get("id");
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -40,7 +43,8 @@ const Form = () => {
   });
   const [file, setFile] = React.useState<any>(null);
   const [uploading, setUploading] = React.useState(false);
-  const [ipfsUrl, setIpfsUrl] = React.useState("");
+  const [authState, setAuthState] = React.useState<any>(null);
+  const [user, setUser] = React.useState<any>(null);
 
   const handleFileSelect = (e: any) => {
     const files = e.target.files;
@@ -51,20 +55,68 @@ const Form = () => {
 
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
-    if (!file) {
-      alert("Please select a file to upload");
+    if (!file || !name || !email || !description) {
+      alert("Please fill all the fields");
       return;
     }
     setUploading(true);
+    // write();
     const client = new Web3Storage({
       token: process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY as string,
     });
     const cid = await client.put([file]);
-    console.log("stored files with cid:", cid);
-    const url = `https://dweb.link/ipfs/${cid}`;
-    setIpfsUrl(url);
+    // connect db and record Proposal
+    const create = await createRecord(cid);
+    if (!create.res) {
+      alert("Error creating record");
+      setUploading(false);
+      return;
+    }
     setUploading(false);
+    router.push(`/joined`);
   };
+
+  async function createRecord(cid: string) {
+    const newUserId = nanoid();
+    console.log("newUserId", newUserId);
+    try {
+      const createUser = await db
+        .collection("Joiner")
+        .create([
+          newUserId.toString(),
+          name,
+          email,
+          description,
+          cid,
+          campaignId as string,
+        ]);
+      console.log("createRecord", createUser);
+      return { res: true };
+    } catch (err) {
+      console.log("err", err);
+      return { res: false };
+    }
+  }
+
+  useEffect(() => {
+    auth?.onAuthUpdate((authState) => {
+      if (authState) {
+        // User is logged in, show button to dashboard
+        setAuthState(authState);
+        console.log("authState", authState);
+        db.signer(async (data: string) => {
+          console.log("data", data);
+
+          return {
+            h: "eth-personal-sign",
+            sig: await auth!.ethPersonalSign(data),
+          };
+        });
+      } else {
+        // User is NOT logged in, show login button
+      }
+    });
+  }, []);
 
   return (
     <div className="bg-gradient-to-br from-secondary-blue/50 to-secondary-pink/50 grid gap-10 p-10 rounded-lg">
@@ -113,7 +165,7 @@ const Form = () => {
       <div className="flex justify-center">
         <Button
           className="bg-gradient-to-r from-purple to-font-pink px-8"
-          onClick={() => write()}>
+          onClick={(e) => handleSubmit(e)}>
           Submit
         </Button>
         {isLoading && <div>Check Wallet</div>}
@@ -122,18 +174,6 @@ const Form = () => {
       <div className="flex justify-center">
         {uploading ? "Uploading..." : ""}
       </div>
-      {ipfsUrl && (
-        <div className="mt-8">
-          <p className="text-gray-700 font-bold">File uploaded to IPFS:</p>
-          <a
-            href={ipfsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 hover:text-blue-700">
-            {ipfsUrl}
-          </a>
-        </div>
-      )}
     </div>
   );
 };

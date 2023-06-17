@@ -30,6 +30,7 @@
     "ipfs-core": "^0.18.1",
     "ipfs-core-types": "^0.14.1",
     "lucide-react": "^0.244.0",
+    "nanoid": "^4.0.2",
     "next": "13.4.5",
     "postcss": "8.4.24",
     "react": "18.2.0",
