@@ -2,10 +2,11 @@
 import Link from "next/link";
 import React, { useEffect } from "react";
 import CampaignCard from "../campaignCard";
-import { Campaign, useGetCampaign } from "@/hooks/useGetCampaign";
+import { useGetCampaignDB, Campaign } from "@/hooks/useGetCampaignDB";
+import { log } from "console";
 
 const CampaignData = ({ isAll }: { isAll: boolean }) => {
-  const { allCampaign, myCampaign } = useGetCampaign();
+  const { allCampaign, myCampaign } = useGetCampaignDB();
   const [data, setData] = React.useState<Array<Campaign>>([] as any);
 
   useEffect(() => {
@@ -15,6 +16,9 @@ const CampaignData = ({ isAll }: { isAll: boolean }) => {
       setData(myCampaign);
     }
   }, [isAll, allCampaign, myCampaign]);
+
+  console.log("data", data);
+
   return (
     <div className="grid grid-cols-4 gap-10">
       {data?.map((item, index) => (
@@ -22,14 +26,13 @@ const CampaignData = ({ isAll }: { isAll: boolean }) => {
           key={index}
           href={{
             pathname: "/campaign",
-            query: { id: Number(item.campaignId) },
-          }}
-        >
+            query: { id: item.id },
+          }}>
           <CampaignCard
-            id={String(Number(item.campaignId))}
+            id={item.id}
             title={"title"}
             description={"description"}
-            image={"/assets/campaign.png"}
+            image={`https://dweb.link/ipfs/${item.imgCid}`}
             status={item.status}
           />
         </Link>

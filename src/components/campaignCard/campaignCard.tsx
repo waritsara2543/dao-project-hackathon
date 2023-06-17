@@ -46,7 +46,7 @@ const CampaignCard = ({
     }
   };
   return (
-    <div className="relative">
+    <div className="relative transiton duration-300 ease-in-out">
       <Image
         src={image}
         width={250}
@@ -66,8 +66,7 @@ const CampaignCard = ({
           <div className="w-full flex gap-4">
             <Link
               href={{ pathname: "/join-form", query: { id: id } }}
-              className="w-full"
-            >
+              className="w-full">
               <CampaignButton text="join" />
             </Link>
             {/* <Link
@@ -78,7 +77,7 @@ const CampaignCard = ({
             </Link> */}
           </div>
         ) : (
-          <div className="h-7"></div>
+          <div></div>
         )}
       </div>
     </div>
