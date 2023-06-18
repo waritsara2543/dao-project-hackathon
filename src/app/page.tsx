@@ -1,7 +1,7 @@
-import CampaignDetail from '@/components/campaginDetail'
-import CampaignData from '@/components/campaignData'
-import Copyright from '@/components/copyright'
-import Myjoined from './joined/my-joined'
+import CampaignDetail from "@/components/campaginDetail";
+import CampaignData from "@/components/campaignData";
+import Copyright from "@/components/copyright";
+import Myjoined from "./joined/my-joined";
 
 export default function Home() {
   return (
@@ -14,18 +14,18 @@ export default function Home() {
 
         <div className="space-y-6">
           <h1 className="flex justify-start font-bold text-transparent text-2xl md:text-3xl bg-clip-text bg-gradient-to-tr from-font-pink via-font-blue to-pink">
-            Voting
+            Comming soon
           </h1>
           <div className="w-full h-[1px] bg-gradient-to-r from-purple/0 from-5% via-pink via-40% to-purple/0 to-90% drop-shadow-md"></div>
-          <CampaignData isAll />
+          <CampaignData isAll status="coming" />
         </div>
 
         <div className="space-y-6">
           <h1 className="flex justify-start font-bold text-transparent text-2xl md:text-3xl bg-clip-text bg-gradient-to-tr from-font-pink via-font-blue to-pink">
-            Ready to join
+            Open
           </h1>
           <div className="w-full h-[1px] bg-gradient-to-r from-purple/0 from-5% via-pink via-40% to-purple/0 to-90% drop-shadow-md"></div>
-          <CampaignData isAll />
+          <CampaignData isAll status="open" />
           {/* <Myjoined /> */}
         </div>
 
@@ -34,7 +34,7 @@ export default function Home() {
             Close
           </h1>
           <div className="w-full h-[1px] bg-gradient-to-r from-purple/0 from-5% via-pink via-40% to-purple/0 to-90% drop-shadow-md"></div>
-          <CampaignData isAll />
+          <CampaignData isAll status="closed" />
         </div>
 
         <div>
@@ -42,5 +42,5 @@ export default function Home() {
         </div>
       </div>
     </main>
-  )
+  );
 }

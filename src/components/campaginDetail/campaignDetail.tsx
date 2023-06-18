@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from "next/image";
 
 const index = () => {
   return (
@@ -11,11 +11,11 @@ const index = () => {
               Campaign
             </div>
 
-            <div className="py-10 flex justify-center md:justify-start">
+            {/* <div className="py-10 flex justify-center md:justify-start">
               <button className="bg-white bg-opacity-20 backdrop-blur-lg rounded-xl drop-shadow-lg h-[40px] w-[250px] md:h-[50px] md:w-[300px]">
                 <div className="text-white">Explore Now.</div>
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="relative w-full md:w-[365px] h-[447px] bg-[url('/assets/cardbg.png')] rounded-xl">
@@ -35,7 +35,7 @@ const index = () => {
                       src="/assets/apecoin.png"
                       width={60}
                       height={60}
-                      alt={''}
+                      alt={""}
                     />
                   </div>
                   <div className="flex flex-col">
@@ -56,7 +56,7 @@ const index = () => {
                       src="/assets/apecoin.png"
                       width={60}
                       height={60}
-                      alt={''}
+                      alt={""}
                     />
                   </div>
                   <div className="flex flex-col">
@@ -77,7 +77,7 @@ const index = () => {
                       src="/assets/apecoin.png"
                       width={60}
                       height={60}
-                      alt={''}
+                      alt={""}
                     />
                   </div>
                   <div className="flex flex-col">
@@ -98,7 +98,7 @@ const index = () => {
                       src="/assets/apecoin.png"
                       width={60}
                       height={60}
-                      alt={''}
+                      alt={""}
                     />
                   </div>
                   <div className="flex flex-col">
@@ -120,7 +120,7 @@ const index = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default index
+export default index;

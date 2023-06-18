@@ -21,9 +21,12 @@ const Myjoined = () => {
               <ClaimCard
                 campaignId={item.campaignId}
                 databaseId={item.databaseId}
-                title={"title"}
-                description={"description"}
-                image={"/assets/campaign.png"}
+                title={item.title || "Untitled"}
+                description={item.description || "No description"}
+                image={
+                  //`https://dweb.link/ipfs/${item.imgCid}`
+                  "/assets/campaign.png"
+                }
                 status={item.status}
                 claim="claim"
                 page="my-joined"

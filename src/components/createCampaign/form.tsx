@@ -49,8 +49,8 @@ const Form = () => {
     abi: MyGovernor__factory.abi,
     functionName: "createCampaign",
     args: [
-      databaseId,
-      description,
+      "YVcgrmcG3ElQzXhekdFqz",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500",
       parseEther(amountPrize as any),
       BigInt(openDate ? (new Date(openDate).getTime() / 1000).toString() : 0),
       BigInt(closeDate ? (new Date(closeDate).getTime() / 1000).toString() : 0),

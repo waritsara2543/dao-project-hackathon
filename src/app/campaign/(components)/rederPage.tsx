@@ -66,8 +66,17 @@ const RenderPage = () => {
           {renderBt()}
         </div>
         <div className="flex flex-col p-10 gap-5 w-full">
-          <div className="">{campaign?.title}</div>
-          <div>description : {campaign?.description}</div>
+          <div className="text-2xl font-bold">{campaign?.title}</div>
+          <div>Description : {campaign?.description}</div>
+          <div className="flex gap-5 items-center">
+            <p>Amount prize : {campaign?.rewardAmount}</p>
+            <Image
+              src={"/assets/apecoin.png"}
+              width={50}
+              height={50}
+              alt="apecoin"
+            />
+          </div>
         </div>
       </div>
 

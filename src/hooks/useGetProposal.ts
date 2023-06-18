@@ -36,7 +36,9 @@ export const useGetProposal = (campaignId?: string) => {
     const joined: Array<Campaign> = [];
     datas.forEach((data: any) => {
       data.result.forEach((result: any) => {
+        //result:[{proposalId:0,creator:0x,description:0x,voters:[0x,0x]}]
         allCampaign.forEach((campaign: any) => {
+          // campaign:{campaignId:0,proposals:[0,1,2,3]}
           campaign.proposals.forEach((proposal: any) => {
             if (proposal === result.proposalId) {
               if (address === result.creator)

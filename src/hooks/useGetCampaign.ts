@@ -3,7 +3,7 @@ import { MyGovernor__factory } from "@/typechain-types";
 import { auth, db } from "@/utils/polybaseClient";
 import React from "react";
 import { useEffect, useMemo } from "react";
-import { parseEther } from "viem";
+import { formatEther, parseEther } from "viem";
 import { useAccount, useContractRead } from "wagmi";
 export interface Campaign {
   campaignId: string;
@@ -61,7 +61,7 @@ export const useGetCampaign = () => {
           creator: campaign.creator,
           endBlock: dateformatter(Number(campaign.endBlock)),
           startBlock: dateformatter(Number(campaign.startBlock)),
-          rewardAmount: Number(campaign.rewardAmount),
+          rewardAmount: Number(formatEther(campaign.rewardAmount)),
           isOwner: campaign.creator === address,
           status: checkStatus(
             Number(campaign.startBlock),

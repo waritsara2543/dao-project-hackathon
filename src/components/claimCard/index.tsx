@@ -12,6 +12,7 @@ import { MyGovernor__factory } from "@/typechain-types";
 import { useAccount, useContractWrite } from "wagmi";
 import { useGetProposal } from "@/hooks/useGetProposal";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 export interface ClaimCardProps {
   databaseId: string;
@@ -55,6 +56,7 @@ const ClaimCard = ({
       });
     },
   });
+
   const renderStatus = () => {
     if (status === "open") {
       return (

@@ -8,9 +8,10 @@ import addressList from "@/constants/addressList";
 import { MyGovernor__factory } from "@/typechain-types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Web3Storage } from "web3.storage";
-import { auth, db } from "@/utils/polybaseClient";
+import { auth, db, signIn } from "@/utils/polybaseClient";
 import { nanoid } from "nanoid/non-secure";
 import toast, { Toaster } from "react-hot-toast";
+import { useGetAuth } from "@/hooks/useGetAuth";
 
 // const ipfs = await IPFS.create();
 
@@ -22,6 +23,7 @@ const Form = () => {
   const [email, setEmail] = React.useState("");
   const [description, setDescription] = React.useState("");
   const { address } = useAccount();
+  const { authPoly } = useGetAuth();
   const cid = "0x1234567890";
   const { data, isLoading, isSuccess, write } = useContractWrite({
     address: addressList.getAddress("MyGovernor"),
@@ -58,20 +60,25 @@ const Form = () => {
       });
       return;
     }
+    if (authPoly === null) {
+      console.log("No authPoly ===> Please sign in");
+      signIn();
+      return;
+    }
     setUploading(true);
     write();
-    // const client = new Web3Storage({
-    //   token: process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY as string,
-    // });
-    // const cid = await client.put([file]);
-    // // connect db and record Proposal
-    // const create = await createRecord(cid);
-    // if (!create.res) {
-    //   alert("Error creating record");
-    //   setUploading(false);
-    //   return;
-    // }
-    // setUploading(false);
+    const client = new Web3Storage({
+      token: process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY as string,
+    });
+    const cid = await client.put([file]);
+    // connect db and record Proposal
+    const create = await createRecord(cid);
+    if (!create.res) {
+      alert("Error creating record");
+      setUploading(false);
+      return;
+    }
+    setUploading(false);
     return router.push(`/joined`);
   };
 
@@ -96,26 +103,6 @@ const Form = () => {
       return { res: false };
     }
   }
-
-  useEffect(() => {
-    auth?.onAuthUpdate((authState) => {
-      if (authState) {
-        // User is logged in, show button to dashboard
-        setAuthState(authState);
-        console.log("authState", authState);
-        db.signer(async (data: string) => {
-          console.log("data", data);
-
-          return {
-            h: "eth-personal-sign",
-            sig: await auth!.ethPersonalSign(data),
-          };
-        });
-      } else {
-        // User is NOT logged in, show login button
-      }
-    });
-  }, []);
 
   return (
     <div className="bg-gradient-to-br from-secondary-blue/50 to-secondary-pink/50 grid gap-10 p-10 rounded-lg">

@@ -1,6 +1,4 @@
-import ClaimCard from "@/components/claimCard";
 import React from "react";
-import Link from "next/link";
 import Myjoined from "./my-joined";
 
 const JoinedPage = () => {
