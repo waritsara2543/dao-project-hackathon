@@ -17,7 +17,7 @@ const CampaignData = ({ isAll }: { isAll: boolean }) => {
   }, [isAll, allCampaign, myCampaign]);
 
   return (
-    <div className="flex justify-center overflow-x-auto">
+    <div className="flex justify-center sm:flex sm:justify-start overflow-x-auto py-10">
       <div className="flex gap-6 sm:gap-8 md:gap-10 lg:gap-12">
         {data?.map((item, index) => (
           <Link
