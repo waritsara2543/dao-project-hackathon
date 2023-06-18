@@ -1,8 +1,7 @@
-import ClaimCard from '@/components/claimCard'
-import { data } from '@/constants/mockup'
-import React from 'react'
-import Link from 'next/link'
-import Myjoined from './my-joined'
+import ClaimCard from "@/components/claimCard";
+import React from "react";
+import Link from "next/link";
+import Myjoined from "./my-joined";
 
 const JoinedPage = () => {
   return (
@@ -15,7 +14,7 @@ const JoinedPage = () => {
         <Myjoined />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default JoinedPage
+export default JoinedPage;

@@ -1,6 +1,5 @@
 import CampaignCard from "@/components/campaignCard";
 import { Button } from "@/components/ui/button";
-import { data } from "@/constants/mockup";
 import { PlusCircleIcon } from "lucide-react";
 import React from "react";
 import Link from "next/link";

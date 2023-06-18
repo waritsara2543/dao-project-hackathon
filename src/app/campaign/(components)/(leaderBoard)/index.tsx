@@ -1,6 +1,5 @@
 "use cient";
 import React from "react";
-import { data } from "@/constants/mockup";
 import DataTable from "./dataTable";
 import { useGetCampaign } from "@/hooks/useGetCampaign";
 
