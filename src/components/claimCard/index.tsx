@@ -13,6 +13,7 @@ import { useAccount, useContractWrite } from "wagmi";
 import { useGetProposal } from "@/hooks/useGetProposal";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
+import React from "react";
 
 export interface ClaimCardProps {
   databaseId: string;
@@ -36,16 +37,17 @@ const ClaimCard = ({
 }: ClaimCardProps) => {
   const { sortedProposals } = useGetProposal(campaignId);
   const { address } = useAccount();
-
+  const [proposalId, setProposalId] = React.useState<string>("");
+  useEffect(() => {
+    if (sortedProposals.length > 0) {
+      setProposalId(sortedProposals[0].id);
+    }
+  }, [sortedProposals]);
   const { data, isLoading, isSuccess, write } = useContractWrite({
     address: addressList.getAddress("MyGovernor"),
     abi: MyGovernor__factory.abi,
     functionName: "claimRewards",
-    args: [
-      BigInt(campaignId),
-      address as `0x${string}`,
-      BigInt(sortedProposals[0].id ? sortedProposals[0].id : 0),
-    ],
+    args: [BigInt(campaignId), address as `0x${string}`, BigInt(proposalId)],
     onSuccess: (data) => {
       toast.success(`Successfully created`, {
         duration: 10000,

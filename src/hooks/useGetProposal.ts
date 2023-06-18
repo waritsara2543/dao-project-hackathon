@@ -4,6 +4,13 @@ import { useMemo } from "react";
 import { useAccount, useContractRead, useContractReads } from "wagmi";
 import { Campaign, useGetCampaign } from "./useGetCampaign";
 
+interface Proposal {
+  id: number;
+  creator: string;
+  description: string;
+  voters: any;
+  score: number;
+}
 export const useGetProposal = (campaignId?: string) => {
   const { allCampaign } = useGetCampaign();
   const { address } = useAccount();
@@ -53,15 +60,15 @@ export const useGetProposal = (campaignId?: string) => {
 
   const proposals = useMemo(() => {
     if (!data) return [];
-    const result: any = [];
-    data.forEach((proposal: any) => {
+    const result: Array<Proposal> = [];
+    data.forEach((proposal) => {
       result.push({
         id: Number(proposal.proposalId),
         creator: proposal.creator,
         description: proposal.description,
         voters: proposal.voters,
         score: proposal.voters.length,
-      } as any);
+      });
     });
     return result;
   }, [data]);
