@@ -75,7 +75,7 @@ export const useGetProposal = (campaignId?: string) => {
 
   const sortedProposals = useMemo(() => {
     if (!proposals) return [];
-    const result: any = proposals.sort((a: any, b: any) => {
+    const result: Array<Proposal> = proposals.sort((a: any, b: any) => {
       return b.score - a.score;
     });
     return result;

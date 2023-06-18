@@ -38,9 +38,11 @@ const ClaimCard = ({
   const { sortedProposals } = useGetProposal(campaignId);
   const { address } = useAccount();
   const [proposalId, setProposalId] = React.useState<string>("");
+  const [creator, setCreator] = React.useState<string>("");
   useEffect(() => {
     if (sortedProposals.length > 0) {
-      setProposalId(sortedProposals[0].id);
+      setProposalId(sortedProposals[0].id.toString());
+      setCreator(sortedProposals[0].creator);
     }
   }, [sortedProposals]);
   const { data, isLoading, isSuccess, write } = useContractWrite({
@@ -95,7 +97,7 @@ const ClaimCard = ({
         </p>
         {status === "closed" &&
         claim === "claim" &&
-        ((page === "my-joined" && address === sortedProposals[0].creator) ||
+        ((page === "my-joined" && address === creator) ||
           (page === "my-voted" &&
             sortedProposals[0].voters.includes(address))) ? (
           <CampaignButton
