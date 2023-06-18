@@ -28,18 +28,18 @@ const index = () => {
                 <div className="flex flex-row space-x-4">
                   <div className="">
                     <Image
-                      src="/assets/Ellipse 6.png"
-                      width={70}
-                      height={70}
+                      src="/assets/apecoin.png"
+                      width={60}
+                      height={60}
                       alt={''}
                     />
                   </div>
                   <div className="flex flex-col">
                     <div className="font-bold text-transparent text-sm bg-clip-text bg-gradient-to-tr from-font-pink via-font-blue to-pink">
-                      Tee
+                      Rawee.J
                     </div>
                     <div className="font-bold text-transparent text-sm bg-clip-text bg-gradient-to-tr from-font-blue via-font-blue to-pink">
-                      Sub Title
+                      Campaign (Music Fastival)
                     </div>
                   </div>
                 </div>
@@ -49,18 +49,18 @@ const index = () => {
                 <div className="flex flex-row space-x-4">
                   <div className="">
                     <Image
-                      src="/assets/Ellipse 6.png"
-                      width={70}
-                      height={70}
+                      src="/assets/apecoin.png"
+                      width={60}
+                      height={60}
                       alt={''}
                     />
                   </div>
                   <div className="flex flex-col">
                     <div className="font-bold text-transparent text-sm bg-clip-text bg-gradient-to-tr from-font-pink via-font-blue to-pink">
-                      Tee
+                      Nara.T
                     </div>
                     <div className="font-bold text-transparent text-sm bg-clip-text bg-gradient-to-tr from-font-blue via-font-blue to-pink">
-                      Sub Title
+                      Campaign (Article Fastival)
                     </div>
                   </div>
                 </div>
@@ -70,18 +70,18 @@ const index = () => {
                 <div className="flex flex-row space-x-4">
                   <div className="">
                     <Image
-                      src="/assets/Ellipse 6.png"
-                      width={70}
-                      height={70}
+                      src="/assets/apecoin.png"
+                      width={60}
+                      height={60}
                       alt={''}
                     />
                   </div>
                   <div className="flex flex-col">
                     <div className="font-bold text-transparent text-sm bg-clip-text bg-gradient-to-tr from-font-pink via-font-blue to-pink">
-                      Tee
+                      Waris.M
                     </div>
                     <div className="font-bold text-transparent text-sm bg-clip-text bg-gradient-to-tr from-font-blue via-font-blue to-pink">
-                      Sub Title
+                      Campaign (singing  Fastival)
                     </div>
                   </div>
                 </div>

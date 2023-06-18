@@ -1,5 +1,6 @@
 import CampaignDetail from '@/components/campaginDetail'
 import CampaignData from '@/components/campaignData'
+import Copyright from '@/components/copyright'
 import Myjoined from './joined/my-joined'
 
 export default function Home() {
@@ -34,6 +35,10 @@ export default function Home() {
           </h1>
           <div className="w-full h-[1px] bg-gradient-to-r from-purple/0 from-5% via-pink via-40% to-purple/0 to-90% drop-shadow-md"></div>
           <CampaignData isAll />
+        </div>
+
+        <div>
+          <Copyright />
         </div>
       </div>
     </main>
