@@ -16,7 +16,8 @@ const index = () => {
             </div>
           </div>
         </div>
-        <div className="relative w-[365px] h-[447px]  bg-gradient-to-br from-blue-800 via-purple-900 to-blue-800 rounded-xl drop-shadow-lg">
+        <div className="relative w-[365px] h-[447px] bg-[url('/assets/cardbg.png')] rounded-xl ">
+          {/* <div className="relative w-[365px] h-[447px]  bg-gradient-to-br from-blue-800 via-purple-900 to-blue-800 rounded-xl drop-shadow-lg"> */}
           <div>
             <div className=" mt-2 space-y-2 ">
               <div className="text-3xl font-bold text-white">Leader Board</div>
@@ -86,9 +87,13 @@ const index = () => {
                   </div>
                 </div>
               </div>
-              <button className=" duration-300 transform hover:scale-125 transition ease-linear bg-gradient-to-tr from-font-pink via-font-blue to-pink h-[50px] w-[300px]  rounded-xl">
-                <div className=" text-white">Glass Button</div>
-              </button>
+              {/* //Button */}
+              <div className=" flex  justify-center items-center text-center">
+                <button
+                  className=" duration-300 transform hover:scale-125 transition ease-linear  
+              bg-[url('/assets/Button.png')]  h-[50px] w-[250px]"
+                ></button>
+              </div>
             </div>
           </div>
         </div>
