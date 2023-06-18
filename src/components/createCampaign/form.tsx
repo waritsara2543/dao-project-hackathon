@@ -87,7 +87,6 @@ const Form = () => {
       return;
     }
     if (authPoly === null) {
-      console.log("No authPoly ===> Please sign in");
       signIn();
       return;
     }
@@ -113,8 +112,6 @@ const Form = () => {
   };
 
   async function createRecord(imgCid: string) {
-    console.log(databaseId);
-
     try {
       const createUser = await db
         .collection("Campaign")
@@ -131,7 +128,6 @@ const Form = () => {
           (new Date(closeDate!).getTime() / 1000).toString(),
           amountPrize.toString(),
         ]);
-      console.log("createRecord", createUser);
       return { res: true };
     } catch (err) {
       console.log("err", err);

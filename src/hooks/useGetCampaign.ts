@@ -86,8 +86,6 @@ export const useGetCampaign = () => {
           });
         });
       });
-    console.log("result", result);
-
     return result;
   }, [data, address, campaignsDb]);
 
@@ -100,10 +98,7 @@ export const useGetCampaign = () => {
       if (authState) {
         // User is logged in, show button to dashboard
         setAuthState(authState);
-        console.log("authState", authState);
         db.signer(async (data: string) => {
-          console.log("data", data);
-
           return {
             h: "eth-personal-sign",
             sig: await auth!.ethPersonalSign(data),

@@ -35,10 +35,7 @@ export const useGetCampaignDB = () => {
       if (authState) {
         // User is logged in, show button to dashboard
         setAuthState(authState);
-        console.log("authState", authState);
         db.signer(async (data: string) => {
-          console.log("data", data);
-
           return {
             h: "eth-personal-sign",
             sig: await auth!.ethPersonalSign(data),

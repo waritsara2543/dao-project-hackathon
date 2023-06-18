@@ -15,14 +15,12 @@ export function useGetProposalDb(campaignId: string) {
     record.data.forEach((item: any) => {
       proposals.push(item.data);
     });
-    console.log("proposals", proposals);
     setData(proposals);
     return proposals;
   }
 
   useEffect(() => {
     if (authPoly === null) {
-      console.log("No authPoly ===> Please sign in");
       signIn();
       return;
     } else {

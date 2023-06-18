@@ -18,7 +18,6 @@ const Page = () => {
     const record = await db.collection("User").get();
     const { data } = record;
     const users = data.map((item: any) => item.data);
-    console.log("users", users);
     setUser(users);
   }
 
@@ -27,20 +26,17 @@ const Page = () => {
     const createUser = await db
       .collection("User")
       .create([`${newUserId}`, name]);
-    console.log("createRecord", createUser);
   }
 
   async function getOneRecord() {
     const colletionReference = db.collection("User");
     const record = await colletionReference.record("0x123").get();
     const { data } = record;
-    console.log("one_record", data);
   }
 
   async function getRecordId() {
     const collectionReference = db.collection("User");
     const record = await collectionReference.where("id", "==", "0x123").get();
-    console.log("recordById", record);
   }
 
   useEffect(() => {
@@ -48,10 +44,7 @@ const Page = () => {
       if (authState) {
         // User is logged in, show button to dashboard
         setAuthState(authState);
-        console.log("authState", authState);
         db.signer(async (data: string) => {
-          console.log("data", data);
-
           return {
             h: "eth-personal-sign",
             sig: await auth!.ethPersonalSign(data),
@@ -64,20 +57,20 @@ const Page = () => {
     getUsers();
   }, []);
 
-  console.log("authState", authState);
-
   return (
     <div className="flex min-h-screen flex-col items-center  p-24">
       <div className="flex flex-col">
         <input type="text" onChange={(e) => setName(e.target.value)} />
         <button
           className="text-white border-2 p-2 rounded-lg"
-          onClick={() => createRecord()}>
+          onClick={() => createRecord()}
+        >
           Create Record
         </button>
         <button
           className="text-white border-2 p-2 rounded-lg"
-          onClick={() => getUsers()}>
+          onClick={() => getUsers()}
+        >
           getUsers
         </button>
       </div>

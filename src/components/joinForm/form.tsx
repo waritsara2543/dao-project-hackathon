@@ -65,7 +65,6 @@ const Form = () => {
     }
 
     if (authPoly === null) {
-      console.log("No authPoly ===> Please sign in");
       signIn();
       return;
     }
@@ -76,7 +75,6 @@ const Form = () => {
     });
     const cid = await client.put([file]);
     // connect db and record Proposal
-    console.log("file", file);
 
     const lighthouse = await uploadFile(flielist);
     const create = await createRecord(cid, lighthouse);
@@ -91,7 +89,6 @@ const Form = () => {
 
   async function createRecord(cid: string, lighthouse: string) {
     const newUserId = nanoid();
-    console.log("newUserId", newUserId);
     try {
       const createUser = await db
         .collection("Joiner")
@@ -105,7 +102,6 @@ const Form = () => {
           lighthouse,
           campaignId as string,
         ]);
-      console.log("createRecord", createUser);
       return { res: true };
     } catch (err) {
       console.log("err", err);
@@ -117,7 +113,6 @@ const Form = () => {
   const progressCallback = (progressData: any) => {
     const progress = (progressData?.total / progressData?.uploaded).toFixed(2);
     const percentageDone = 100 - Number(progress);
-    console.log(percentageDone);
   };
 
   const uploadFile = async (file: any) => {
@@ -125,10 +120,6 @@ const Form = () => {
       file,
       "b78bffc9.e92e3077bf5b4a3b8ae2170b2a95a485",
       progressCallback
-    );
-    console.log("File Status:", output);
-    console.log(
-      "Visit at https://gateway.lighthouse.storage/ipfs/" + output.data.Hash
     );
     return `https://gateway.lighthouse.storage/ipfs/${output.data.Hash}`;
   };
@@ -175,7 +166,6 @@ const Form = () => {
           className="col-span-3"
           onChange={(e) => {
             handleFileSelect(e);
-            console.log(e.target.files);
           }}
         />
       </div>
