@@ -11,6 +11,7 @@ import addressList from "@/constants/addressList";
 import { MyGovernor__factory } from "@/typechain-types";
 import { useAccount, useContractWrite } from "wagmi";
 import { useGetProposal } from "@/hooks/useGetProposal";
+import toast from "react-hot-toast";
 
 export interface ClaimCardProps {
   id: string;
@@ -37,6 +38,16 @@ const ClaimCard = ({
     abi: MyGovernor__factory.abi,
     functionName: "claimRewards",
     args: [BigInt(id), address as `0x${string}`, BigInt(sortedProposals[0].id)],
+    onSuccess: (data) => {
+      toast.success(`Successfully created`, {
+        duration: 10000,
+      });
+    },
+    onError: (error) => {
+      toast.error(`Error! ${error}`, {
+        duration: 10000,
+      });
+    },
   });
   const renderStatus = () => {
     if (status === "open") {

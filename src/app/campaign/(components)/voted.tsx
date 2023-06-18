@@ -20,7 +20,7 @@ const Voted = ({ id }: { id: string }) => {
     functionName: "vote",
     args: [BigInt(id), address!, BigInt(campaignId as string)],
     onSuccess: (data) => {
-      toast.success(`Successfully created`, {
+      toast.success(`Successfully voted`, {
         duration: 10000,
       });
     },

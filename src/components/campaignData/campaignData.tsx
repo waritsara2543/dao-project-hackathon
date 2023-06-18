@@ -2,11 +2,11 @@
 import Link from "next/link";
 import React, { useEffect } from "react";
 import CampaignCard from "../campaignCard";
-import { useGetCampaignDB, Campaign } from "@/hooks/useGetCampaignDB";
+import { useGetCampaign, Campaign } from "@/hooks/useGetCampaign";
 import { log } from "console";
 
 const CampaignData = ({ isAll }: { isAll: boolean }) => {
-  const { allCampaign, myCampaign } = useGetCampaignDB();
+  const { allCampaign, myCampaign } = useGetCampaign();
   const [data, setData] = React.useState<Array<Campaign>>([] as any);
 
   useEffect(() => {
@@ -26,10 +26,11 @@ const CampaignData = ({ isAll }: { isAll: boolean }) => {
           key={index}
           href={{
             pathname: "/campaign",
-            query: { id: item.id },
-          }}>
+            query: { databaseId: item.databaseId, campaignId: item.campaignId },
+          }}
+        >
           <CampaignCard
-            id={item.id}
+            id={item.databaseId}
             title={"title"}
             description={"description"}
             image={`https://dweb.link/ipfs/${item.imgCid}`}

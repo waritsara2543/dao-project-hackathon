@@ -17,7 +17,7 @@ import { useAccount, useContractRead, useContractWrite } from "wagmi";
 import addressList from "@/constants/addressList";
 import { MyGovernor__factory, MyToken__factory } from "@/typechain-types";
 import { parseEther } from "viem";
-import { auth, db } from "@/utils/polybaseClient";
+import { auth, db, signIn } from "@/utils/polybaseClient";
 import { nanoid } from "nanoid/non-secure";
 import toast, { Toaster } from "react-hot-toast";
 import { Web3Storage } from "web3.storage";
@@ -32,7 +32,7 @@ const Form = () => {
   const [openDate, setOpenDate] = React.useState<Date>();
   const [amountPrize, setAmountPrize] = React.useState("");
   const { address } = useAccount();
-  const databaseId = "1";
+  const [databaseId, setDatabaseId] = React.useState(nanoid());
   //==========================================================
   const [authState, setAuthState] = React.useState<any>(null);
   const [file, setFile] = React.useState<any>(null);
@@ -81,43 +81,50 @@ const Form = () => {
       !openDate ||
       !amountPrize
     ) {
-      alert("Please fill all the fields");
-      // toast("Please fill all the fields", {
-      //   duration: 6000,
-      // });
+      toast.error("Please fill all the fields", {
+        duration: 10000,
+      });
       return;
     }
+    // if (!authState) {
+    //   signIn();
+    //   checkAuth();
+    // }
     setUploading(true);
-    // write();
-    const client = new Web3Storage({
-      token: process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY as string,
-    });
-    const imgCid = await client.put([file]);
-    // connect db and record Proposal
-    const create = await createRecord(imgCid);
-    if (!create.res) {
-      alert("Error creating record");
+    if (Number(allowance) !== 0) {
+      const client = new Web3Storage({
+        token: process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY as string,
+      });
+      const imgCid = await client.put([file]);
+      // connect db and record Proposal
+      const create = await createRecord(imgCid);
+      if (!create.res) {
+        alert("Error creating record");
+        setUploading(false);
+        return;
+      }
       setUploading(false);
-      return;
+      write();
+      return router.push(`/my-campaign`);
+    } else {
+      approve();
     }
-    setUploading(false);
-    return router.push(`/my-campaign`);
   };
 
   async function createRecord(imgCid: string) {
-    const newUserId = nanoid();
-    console.log("newUserId", newUserId);
+    console.log(databaseId);
 
     try {
       const createUser = await db
         .collection("Campaign")
         .create([
-          newUserId.toString(),
+          databaseId,
           authState.userId,
           title,
           description,
           category,
           imgCid,
+          file.name,
           submitFileType,
           (new Date(openDate!).getTime() / 1000).toString(),
           (new Date(closeDate!).getTime() / 1000).toString(),
@@ -156,12 +163,12 @@ const Form = () => {
     args: [address as any, addressList.getAddress("MyGovernor")],
   });
 
-  useEffect(() => {
-    auth?.onAuthUpdate((authState) => {
-      if (authState) {
+  const checkAuth = () => {
+    auth?.onAuthUpdate((listener) => {
+      if (listener) {
+        console.log("authState", listener);
         // User is logged in, show button to dashboard
-        setAuthState(authState);
-        console.log("authState", authState);
+        setAuthState(listener);
         db.signer(async (data: string) => {
           console.log("data", data);
 
@@ -174,6 +181,10 @@ const Form = () => {
         // User is NOT logged in, show login button
       }
     });
+  };
+
+  useEffect(() => {
+    checkAuth();
   }, []);
 
   return (
@@ -205,15 +216,16 @@ const Form = () => {
           value={category}
           onValueChange={(value) => {
             setCategory(value);
-          }}>
+          }}
+        >
           <SelectTrigger className="col-span-3">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="apple">Song</SelectItem>
-              <SelectItem value="banana">Article</SelectItem>
-              <SelectItem value="blueberry">Poet</SelectItem>
+              <SelectItem value="song">Song</SelectItem>
+              <SelectItem value="article">Article</SelectItem>
+              <SelectItem value="poet">Poet</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -233,7 +245,8 @@ const Form = () => {
           value={submitFileType}
           onValueChange={(value) => {
             setSubmitFileType(value);
-          }}>
+          }}
+        >
           <SelectTrigger className="col-span-3">
             <SelectValue />
           </SelectTrigger>
@@ -275,15 +288,23 @@ const Form = () => {
       <div className="flex justify-center">
         <Button
           className="bg-gradient-to-r from-purple to-font-pink px-8"
-          onClick={() => {
-            Number(allowance) !== 0 ? write() : approve();
-          }}>
+          onClick={(e) => {
+            handleSubmit(e);
+          }}
+        >
           {isLoading || approveLoading
             ? "Loading... "
             : Number(allowance) !== 0
             ? "Submit"
             : "Approve"}
         </Button>
+        <button
+          onClick={() => {
+            createRecord("eieieie");
+          }}
+        >
+          record
+        </button>
       </div>
     </div>
   );
