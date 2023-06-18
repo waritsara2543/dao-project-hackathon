@@ -1,6 +1,6 @@
 "use client";
 import { useGetProposal } from "@/hooks/useGetProposal";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import ClaimCard from "@/components/claimCard";
 
@@ -11,19 +11,20 @@ const VotedData = () => {
       {myVoted.map(
         (item) =>
           item.status !== "coming" && (
-            <Link
-              href={{
-                pathname: `/campaign`,
-                query: {
-                  databaseId: item.databaseId,
-                  campaignId: item.campaignId,
-                },
-              }}
-              key={item.campaignId}
-            >
+            // <Link
+            //   href={{
+            //     pathname: `/campaign`,
+            //     query: {
+            //       databaseId: item.databaseId,
+            //       campaignId: item.campaignId,
+            //     },
+            //   }}
+            //   key={item.campaignId}
+            // >
+            <div key={item?.campaignId}>
               <ClaimCard
-                campaignId={item.campaignId}
-                databaseId={item.databaseId}
+                campaignId={item?.campaignId}
+                databaseId={item?.databaseId}
                 title={"title"}
                 description={"description"}
                 image={"/assets/campaign.png"}
@@ -31,7 +32,8 @@ const VotedData = () => {
                 claim="claim"
                 page="my-voted"
               />
-            </Link>
+            </div>
+            // </Link>
           )
       )}
     </div>
