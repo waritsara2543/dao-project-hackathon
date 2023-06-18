@@ -25,8 +25,22 @@ const JoinerCard = ({ wallet, name, description, id }: JoinerCardProps) => {
         <Voted id={id} />
       </div>
       <div className="flex flex-col p-10 gap-5 w-full">
-        <div className="">{name}</div>
-        <div>description:{description}</div>
+        <div className="font-bold">{name}</div>
+        <div>
+          <span className="font-bold">Description:</span> {description}
+        </div>
+        <div>
+          <span className="font-bold">Contribution:</span>
+          <div className="mt-5">
+            <Image
+              src={"/assets/PDF_icon.png"}
+              width={50}
+              height={50}
+              alt="pdf"
+              onClick={() => {}}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

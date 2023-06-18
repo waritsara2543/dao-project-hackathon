@@ -49,11 +49,11 @@ const Form = () => {
     abi: MyGovernor__factory.abi,
     functionName: "createCampaign",
     args: [
-      "YVcgrmcG3ElQzXhekdFqz",
+      "w5jX7FEM8P2Zo0BLhCl6D",
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500",
       parseEther(amountPrize as any),
       BigInt(openDate ? (new Date(openDate).getTime() / 1000).toString() : 0),
-      BigInt(closeDate ? (new Date(closeDate).getTime() / 1000).toString() : 0),
+      BigInt("1687078842"),
     ],
     onSuccess: (data) => {
       toast.success(`Successfully created`, {

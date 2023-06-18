@@ -14,7 +14,7 @@ import React from "react";
 
 const DataTable = () => {
   const searchParams = useSearchParams();
-  const campaignId = searchParams.get("id");
+  const campaignId = searchParams.get("campaignId");
   const { sortedProposals } = useGetProposal(campaignId as string);
 
   return (

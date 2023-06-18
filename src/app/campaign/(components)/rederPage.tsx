@@ -54,7 +54,7 @@ const RenderPage = () => {
           <div className="flex justify-center">
             {" "}
             <Image
-              src="/assets/squirrel.png"
+              src="/assets/campaign.png"
               alt="Picture of the author"
               width={300}
               height={300}
@@ -66,8 +66,10 @@ const RenderPage = () => {
           {renderBt()}
         </div>
         <div className="flex flex-col p-10 gap-5 w-full">
-          <div className="text-2xl font-bold">{campaign?.title}</div>
-          <div>Description : {campaign?.description}</div>
+          <div className="text-2xl font-bold">
+            {campaign?.title || "United"}
+          </div>
+          <div>Description : {campaign?.description || "No description"}</div>
           <div className="flex gap-5 items-center">
             <p>Amount prize : {campaign?.rewardAmount}</p>
             <Image

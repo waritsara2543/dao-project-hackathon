@@ -75,7 +75,7 @@ const CampaignCard = ({
         alt="campaign"
         className="rounded-t-xl"
       />
-      <div className="rounded-xl bg-opacity-10 text-white px-6 py-2 absolute top-24 sm:top-24 left-0 z-10 bg-gradient-to-b from-blue/25 from-10% via-blue/44 via-30%  to-blue to-90% backdrop-blur-sm w-[250px] grid gap-2 border border-white/30">
+      <div className="h-48 rounded-xl bg-opacity-10 text-white px-6 py-2 absolute top-24 sm:top-24 left-0 z-10 bg-gradient-to-b from-blue/25 from-10% via-blue/44 via-30%  to-blue to-90% backdrop-blur-sm w-[250px] grid gap-2 border border-white/30">
         {renderStatus()}
 
         <p className="text-lg font-semibold">{title}</p>

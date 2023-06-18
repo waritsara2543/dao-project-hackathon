@@ -60,25 +60,25 @@ const Form = () => {
       });
       return;
     }
-    if (authPoly === null) {
-      console.log("No authPoly ===> Please sign in");
-      signIn();
-      return;
-    }
+    // if (authPoly === null) {
+    //   console.log("No authPoly ===> Please sign in");
+    //   signIn();
+    //   return;
+    // }
     setUploading(true);
     write();
-    const client = new Web3Storage({
-      token: process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY as string,
-    });
-    const cid = await client.put([file]);
-    // connect db and record Proposal
-    const create = await createRecord(cid);
-    if (!create.res) {
-      alert("Error creating record");
-      setUploading(false);
-      return;
-    }
-    setUploading(false);
+    // const client = new Web3Storage({
+    //   token: process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY as string,
+    // });
+    // const cid = await client.put([file]);
+    // // connect db and record Proposal
+    // const create = await createRecord(cid);
+    // if (!create.res) {
+    //   alert("Error creating record");
+    //   setUploading(false);
+    //   return;
+    // }
+    // setUploading(false);
     return router.push(`/joined`);
   };
 

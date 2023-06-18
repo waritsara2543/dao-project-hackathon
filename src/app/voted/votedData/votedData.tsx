@@ -6,12 +6,12 @@ import ClaimCard from "@/components/claimCard";
 
 const VotedData = () => {
   const { myVoted } = useGetProposal();
-  useEffect(() => {
-    console.log(myVoted);
-  }, [myVoted]);
+  // useEffect(() => {
+  //   console.log(myVoted);
+  // }, [myVoted]);
   return (
     <div className="grid grid-cols-4 gap-10">
-      {/* {myVoted.map(
+      {myVoted.map(
         (item) =>
           item.status !== "coming" && (
             <div key={item.campaignId}>
@@ -30,7 +30,7 @@ const VotedData = () => {
               />
             </div>
           )
-      )} */}
+      )}
     </div>
   );
 };
