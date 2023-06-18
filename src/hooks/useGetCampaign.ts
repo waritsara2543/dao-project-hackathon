@@ -21,9 +21,6 @@ export interface Campaign {
   catorgory?: string;
   imgCid?: string;
   typeFile?: string;
-  openDate?: string;
-  closeDate?: string;
-  amountPrize?: string;
 }
 
 export interface CampaignDb {
@@ -83,13 +80,12 @@ export const useGetCampaign = () => {
               item.catorgory = campaignDb.catorgory;
               item.imgCid = campaignDb.imgCid;
               item.typeFile = campaignDb.typeFile;
-              item.openDate = campaignDb.openDate;
-              item.closeDate = campaignDb.closeDate;
-              item.amountPrize = campaignDb.amountPrize;
             }
           });
         });
       });
+    console.log("result", result);
+
     return result;
   }, [data, address, campaignsDb]);
 

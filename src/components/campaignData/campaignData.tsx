@@ -34,8 +34,8 @@ const CampaignData = ({ isAll }: { isAll: boolean }) => {
             <CampaignCard
               databaseId={item.databaseId}
               campaignId={item.campaignId}
-              title={"title"}
-              description={"description"}
+              title={item.title || "Untitled"}
+              description={item.description || "No description"}
               image={`https://dweb.link/ipfs/${item.imgCid}`}
               status={item.status}
             />

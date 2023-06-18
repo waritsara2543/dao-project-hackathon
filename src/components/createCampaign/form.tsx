@@ -40,7 +40,10 @@ const Form = () => {
   // ===== Hook ==============================
   const router = useRouter();
   const { authPoly } = useGetAuth();
-
+  // U_3T9d9wW4AOQgwfAfob2
+  // XomfFBJLIIyhYxhEePdO5
+  // YVcgrmcG3ElQzXhekdFqz
+  // w5jX7FEM8P2Zo0BLhCl6D
   const { write, isLoading } = useContractWrite({
     address: addressList.getAddress("MyGovernor"),
     abi: MyGovernor__factory.abi,
@@ -268,14 +271,15 @@ const Form = () => {
         <Button
           className="bg-gradient-to-r from-purple to-font-pink px-8"
           onClick={(e) => {
-            handleSubmit(e);
+            //handleSubmit(e);
+            write();
           }}
         >
-          {/* {isLoading || approveLoading
+          {isLoading || approveLoading
             ? "Loading... "
             : Number(allowance) !== 0
             ? "Submit"
-            : "Approve"} */}
+            : "Approve"}
         </Button>
         {uploading && <div>uploading...</div>}
       </div>
