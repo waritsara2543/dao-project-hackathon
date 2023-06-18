@@ -14,7 +14,7 @@ const Navbar = () => {
         <div className="  space-x-6 hidden  md:block">
           {navLink.map((item) => (
             <Link key={item.name} href={item.path}>
-              <button className="text-lg md:text-xl">{item.name}</button>
+              <button className="text-sm md:text-md">{item.name}</button>
             </Link>
           ))}
         </div>
