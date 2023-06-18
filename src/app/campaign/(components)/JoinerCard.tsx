@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { ShortAddress } from "@/utils/common";
 import Voted from "./voted";
+import Link from "next/link";
 
 interface JoinerCardProps {
   wallet: `0x${string}`;
@@ -32,13 +33,20 @@ const JoinerCard = ({ wallet, name, description, id }: JoinerCardProps) => {
         <div>
           <span className="font-bold">Contribution:</span>
           <div className="mt-5">
-            <Image
-              src={"/assets/PDF_icon.png"}
-              width={50}
-              height={50}
-              alt="pdf"
-              onClick={() => {}}
-            />
+            <Link
+              href={
+                "https://dweb.link/ipfs/bafybeige5ps6a4tp2oczn5ihm76hzcizfcc2oomarvj7vbgy6okx4pco2q"
+              }
+              target="_blank"
+            >
+              <Image
+                src={"/assets/PDF_icon.png"}
+                width={50}
+                height={50}
+                alt="pdf"
+                onClick={() => {}}
+              />
+            </Link>
           </div>
         </div>
       </div>

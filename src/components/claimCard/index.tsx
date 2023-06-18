@@ -43,7 +43,7 @@ const ClaimCard = ({
     args: [
       BigInt(campaignId),
       address as `0x${string}`,
-      BigInt(sortedProposals[0].campaignId || 0),
+      BigInt(sortedProposals[0].id || 0),
     ],
     onSuccess: (data) => {
       toast.success(`Successfully created`, {
