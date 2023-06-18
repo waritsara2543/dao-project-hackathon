@@ -13,7 +13,8 @@ const RenderPage = () => {
   const { allCampaign } = useGetCampaign();
   const [campaign, setCampaign] = useState<any>();
   const searchParams = useSearchParams();
-  const campaignId = searchParams.get("id");
+  const campaignId = searchParams.get("campaignId");
+  const databaseId = searchParams.get("databaseId");
   useEffect(() => {
     setCampaign(
       allCampaign.filter((item) => item.campaignId === campaignId)[0]
@@ -24,7 +25,12 @@ const RenderPage = () => {
     if (campaign?.status === "open") {
       return (
         <div className="flex justify-center gap-5">
-          <Link href={{ pathname: "/join-form", query: { id: campaignId } }}>
+          <Link
+            href={{
+              pathname: "/join-form",
+              query: { databaseId: databaseId, campaignId: campaignId },
+            }}
+          >
             <CampaignButton text="join" />
           </Link>
         </div>

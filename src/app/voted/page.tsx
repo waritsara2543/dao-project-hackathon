@@ -1,19 +1,19 @@
-import React from "react";
-import VotedData from "./votedData";
+import React from 'react'
+import VotedData from './votedData'
 
 const VotedPage = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 text-white">
-      <div className="w-full grid gap-10">
-        <h1 className="font-bold text-transparent text-3xl bg-clip-text bg-gradient-to-tr from-font-pink via-font-blue to-pink">
+
+    <div className="flex min-h-screen flex-col items-center justify-between p-8 sm:p-16 md:p-24 text-white">
+      <div className="w-full grid gap-6 sm:gap-8 md:gap-10 text-center sm:text-left">
+        <h1 className="font-bold text-transparent text-2xl sm:text-3xl md:text-4xl bg-clip-text bg-gradient-to-tr from-font-pink via-font-blue to-pink">
           My Voted
         </h1>
-
-        <div className="w-full h-[1px] bg-gradient-to-r from-purple/0 from-5% via-pink via-40% to-purple/0 to-90% drop-shadow-md"></div>
+        <div className="w-full h-1 bg-gradient-to-r from-purple/0 from-5% via-pink via-40% to-purple/0 to-90% drop-shadow-md"></div>
         <VotedData />
       </div>
-    </main>
-  );
-};
+    </div>
+  )
+}
 
-export default VotedPage;
+export default VotedPage

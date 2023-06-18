@@ -9,8 +9,9 @@ import toast from "react-hot-toast";
 import { useGetProposal } from "@/hooks/useGetProposal";
 
 const Voted = ({ id }: { id: string }) => {
+  //TODO: get new campaign id
   const searchParams = useSearchParams();
-  const campaignId = searchParams.get("id");
+  const campaignId = searchParams.get("campaignId");
   const { address } = useAccount();
   const { myVoted } = useGetProposal(campaignId as any);
   const [isVoted, setIsVoted] = React.useState(false);
@@ -25,7 +26,7 @@ const Voted = ({ id }: { id: string }) => {
       });
     },
     onError: (error) => {
-      toast.error(`Error! ${error}`, {
+      toast.error(`Error!`, {
         duration: 10000,
       });
     },

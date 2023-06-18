@@ -152,7 +152,7 @@ const Form = () => {
       });
     },
     onError: (error) => {
-      toast.error(`Error! ${error}`, {
+      toast.error(`Error!`, {
         duration: 10000,
       });
     },
@@ -195,7 +195,8 @@ const Form = () => {
           value={category}
           onValueChange={(value) => {
             setCategory(value);
-          }}>
+          }}
+        >
           <SelectTrigger className="col-span-3">
             <SelectValue />
           </SelectTrigger>
@@ -223,7 +224,8 @@ const Form = () => {
           value={submitFileType}
           onValueChange={(value) => {
             setSubmitFileType(value);
-          }}>
+          }}
+        >
           <SelectTrigger className="col-span-3">
             <SelectValue />
           </SelectTrigger>
@@ -267,7 +269,8 @@ const Form = () => {
           className="bg-gradient-to-r from-purple to-font-pink px-8"
           onClick={(e) => {
             handleSubmit(e);
-          }}>
+          }}
+        >
           {/* {isLoading || approveLoading
             ? "Loading... "
             : Number(allowance) !== 0

@@ -19,7 +19,8 @@ const Myjoined = () => {
             // >
             <div key={item.campaignId}>
               <ClaimCard
-                id={item.campaignId.toString()}
+                campaignId={item.campaignId}
+                databaseId={item.databaseId}
                 title={"title"}
                 description={"description"}
                 image={"/assets/campaign.png"}

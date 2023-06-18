@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 
 const JoinerData = () => {
   const searchParams = useSearchParams();
-  const campaignId = searchParams.get("id");
+  const campaignId = searchParams.get("campaignId");
   const { proposals } = useGetProposal(campaignId as string);
 
   return (

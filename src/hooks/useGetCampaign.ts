@@ -60,7 +60,7 @@ export const useGetCampaign = () => {
     if (data && campaignsDb)
       data.forEach((campaign: any) => {
         result.push({
-          campaignId: campaign.campaignId,
+          campaignId: String(Number(campaign.campaignId)),
           creator: campaign.creator,
           endBlock: dateformatter(Number(campaign.endBlock)),
           startBlock: dateformatter(Number(campaign.startBlock)),
@@ -90,9 +90,8 @@ export const useGetCampaign = () => {
           });
         });
       });
-
     return result;
-  }, [data, address]);
+  }, [data, address, campaignsDb]);
 
   const myCampaign = useMemo(() => {
     return allCampaign.filter((campaign) => campaign.creator === address);
