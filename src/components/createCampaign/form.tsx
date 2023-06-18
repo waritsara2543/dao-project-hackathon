@@ -17,11 +17,12 @@ import { useAccount, useContractRead, useContractWrite } from "wagmi";
 import addressList from "@/constants/addressList";
 import { MyGovernor__factory, MyToken__factory } from "@/typechain-types";
 import { parseEther } from "viem";
-import { auth, db, signIn } from "@/utils/polybaseClient";
+import { auth, db, signIn, signOut } from "@/utils/polybaseClient";
 import { nanoid } from "nanoid/non-secure";
 import toast, { Toaster } from "react-hot-toast";
 import { Web3Storage } from "web3.storage";
 import { useRouter } from "next/navigation";
+import { useGetAuth } from "@/hooks/useGetAuth";
 
 const Form = () => {
   const [title, setTitle] = React.useState("");
@@ -34,10 +35,11 @@ const Form = () => {
   const { address } = useAccount();
   const [databaseId, setDatabaseId] = React.useState(nanoid());
   //==========================================================
-  const [authState, setAuthState] = React.useState<any>(null);
   const [file, setFile] = React.useState<any>(null);
   const [uploading, setUploading] = React.useState(false);
+  // ===== Hook ==============================
   const router = useRouter();
+  const { authPoly } = useGetAuth();
 
   const { write, isLoading } = useContractWrite({
     address: addressList.getAddress("MyGovernor"),
@@ -86,10 +88,11 @@ const Form = () => {
       });
       return;
     }
-    // if (!authState) {
-    //   signIn();
-    //   checkAuth();
-    // }
+    if (authPoly === null) {
+      console.log("No authPoly ===> Please sign in");
+      signIn();
+      return;
+    }
     setUploading(true);
     if (Number(allowance) !== 0) {
       const client = new Web3Storage({
@@ -103,8 +106,8 @@ const Form = () => {
         setUploading(false);
         return;
       }
-      setUploading(false);
       write();
+      setUploading(false);
       return router.push(`/my-campaign`);
     } else {
       approve();
@@ -119,7 +122,7 @@ const Form = () => {
         .collection("Campaign")
         .create([
           databaseId,
-          authState.userId,
+          authPoly.userId,
           title,
           description,
           category,
@@ -163,30 +166,6 @@ const Form = () => {
     args: [address as any, addressList.getAddress("MyGovernor")],
   });
 
-  const checkAuth = () => {
-    auth?.onAuthUpdate((listener) => {
-      if (listener) {
-        console.log("authState", listener);
-        // User is logged in, show button to dashboard
-        setAuthState(listener);
-        db.signer(async (data: string) => {
-          console.log("data", data);
-
-          return {
-            h: "eth-personal-sign",
-            sig: await auth!.ethPersonalSign(data),
-          };
-        });
-      } else {
-        // User is NOT logged in, show login button
-      }
-    });
-  };
-
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
   return (
     <div className="bg-gradient-to-br from-secondary-blue/50 to-secondary-pink/50 grid gap-10 p-10 rounded-lg">
       <div className="grid grid-cols-4 items-center">
@@ -216,8 +195,7 @@ const Form = () => {
           value={category}
           onValueChange={(value) => {
             setCategory(value);
-          }}
-        >
+          }}>
           <SelectTrigger className="col-span-3">
             <SelectValue />
           </SelectTrigger>
@@ -245,8 +223,7 @@ const Form = () => {
           value={submitFileType}
           onValueChange={(value) => {
             setSubmitFileType(value);
-          }}
-        >
+          }}>
           <SelectTrigger className="col-span-3">
             <SelectValue />
           </SelectTrigger>
@@ -285,26 +262,19 @@ const Form = () => {
           />
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="flex flex-col justify-center">
         <Button
           className="bg-gradient-to-r from-purple to-font-pink px-8"
           onClick={(e) => {
             handleSubmit(e);
-          }}
-        >
-          {isLoading || approveLoading
+          }}>
+          {/* {isLoading || approveLoading
             ? "Loading... "
             : Number(allowance) !== 0
             ? "Submit"
-            : "Approve"}
+            : "Approve"} */}
         </Button>
-        <button
-          onClick={() => {
-            createRecord("eieieie");
-          }}
-        >
-          record
-        </button>
+        {uploading && <div>uploading...</div>}
       </div>
     </div>
   );
