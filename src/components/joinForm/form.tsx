@@ -12,6 +12,7 @@ import { auth, db, signIn } from "@/utils/polybaseClient";
 import { nanoid } from "nanoid/non-secure";
 import toast, { Toaster } from "react-hot-toast";
 import { useGetAuth } from "@/hooks/useGetAuth";
+import lighthouse from "@lighthouse-web3/sdk";
 
 // const ipfs = await IPFS.create();
 
@@ -42,11 +43,13 @@ const Form = () => {
     },
   });
   const [file, setFile] = React.useState<any>(null);
+  const [flielist, setFilelist] = React.useState<any>(null);
+
   const [uploading, setUploading] = React.useState(false);
-  const [authState, setAuthState] = React.useState<any>(null);
 
   const handleFileSelect = (e: any) => {
     const files = e.target.files;
+    setFilelist(files);
     if (files && files.length > 0) {
       setFile(files[0]);
     }
@@ -60,29 +63,33 @@ const Form = () => {
       });
       return;
     }
-    // if (authPoly === null) {
-    //   console.log("No authPoly ===> Please sign in");
-    //   signIn();
-    //   return;
-    // }
+
+    if (authPoly === null) {
+      console.log("No authPoly ===> Please sign in");
+      signIn();
+      return;
+    }
     setUploading(true);
     write();
-    // const client = new Web3Storage({
-    //   token: process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY as string,
-    // });
-    // const cid = await client.put([file]);
-    // // connect db and record Proposal
-    // const create = await createRecord(cid);
-    // if (!create.res) {
-    //   alert("Error creating record");
-    //   setUploading(false);
-    //   return;
-    // }
-    // setUploading(false);
+    const client = new Web3Storage({
+      token: process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY as string,
+    });
+    const cid = await client.put([file]);
+    // connect db and record Proposal
+    console.log("file", file);
+
+    const lighthouse = await uploadFile(flielist);
+    const create = await createRecord(cid, lighthouse);
+    if (!create.res) {
+      alert("Error creating record");
+      setUploading(false);
+      return;
+    }
+    setUploading(false);
     return router.push(`/joined`);
   };
 
-  async function createRecord(cid: string) {
+  async function createRecord(cid: string, lighthouse: string) {
     const newUserId = nanoid();
     console.log("newUserId", newUserId);
     try {
@@ -90,10 +97,12 @@ const Form = () => {
         .collection("Joiner")
         .create([
           newUserId.toString(),
+          address as string,
           name,
           email,
           description,
           cid,
+          lighthouse,
           campaignId as string,
         ]);
       console.log("createRecord", createUser);
@@ -103,6 +112,26 @@ const Form = () => {
       return { res: false };
     }
   }
+
+  // upload ligthhouse
+  const progressCallback = (progressData: any) => {
+    const progress = (progressData?.total / progressData?.uploaded).toFixed(2);
+    const percentageDone = 100 - Number(progress);
+    console.log(percentageDone);
+  };
+
+  const uploadFile = async (file: any) => {
+    const output = await lighthouse.upload(
+      file,
+      "b78bffc9.e92e3077bf5b4a3b8ae2170b2a95a485",
+      progressCallback
+    );
+    console.log("File Status:", output);
+    console.log(
+      "Visit at https://gateway.lighthouse.storage/ipfs/" + output.data.Hash
+    );
+    return `https://gateway.lighthouse.storage/ipfs/${output.data.Hash}`;
+  };
 
   return (
     <div className="bg-gradient-to-br from-secondary-blue/50 to-secondary-pink/50 grid gap-10 p-10 rounded-lg">
@@ -144,14 +173,19 @@ const Form = () => {
           id="contribution"
           type="file"
           className="col-span-3"
-          onChange={(e) => handleFileSelect(e)}
+          onChange={(e) => {
+            handleFileSelect(e);
+            console.log(e.target.files);
+          }}
         />
       </div>
 
       <div className="flex justify-center">
         <Button
           className="bg-gradient-to-r from-purple to-font-pink px-8"
-          onClick={(e) => handleSubmit(e)}
+          onClick={(e) => {
+            handleSubmit(e);
+          }}
         >
           {isLoading ? "Loading..." : "Submit"}
         </Button>

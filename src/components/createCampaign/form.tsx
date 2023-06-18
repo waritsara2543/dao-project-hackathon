@@ -1,13 +1,12 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -40,20 +39,16 @@ const Form = () => {
   // ===== Hook ==============================
   const router = useRouter();
   const { authPoly } = useGetAuth();
-  // U_3T9d9wW4AOQgwfAfob2
-  // XomfFBJLIIyhYxhEePdO5
-  // YVcgrmcG3ElQzXhekdFqz
-  // w5jX7FEM8P2Zo0BLhCl6D
   const { write, isLoading } = useContractWrite({
     address: addressList.getAddress("MyGovernor"),
     abi: MyGovernor__factory.abi,
     functionName: "createCampaign",
     args: [
-      "w5jX7FEM8P2Zo0BLhCl6D",
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500",
+      databaseId,
+      description,
       parseEther(amountPrize as any),
       BigInt(openDate ? (new Date(openDate).getTime() / 1000).toString() : 0),
-      BigInt("1687078842"),
+      BigInt(closeDate ? (new Date(closeDate).getTime() / 1000).toString() : 0),
     ],
     onSuccess: (data) => {
       toast.success(`Successfully created`, {
@@ -271,8 +266,8 @@ const Form = () => {
         <Button
           className="bg-gradient-to-r from-purple to-font-pink px-8"
           onClick={(e) => {
-            //handleSubmit(e);
-            write();
+            handleSubmit(e);
+            //write();
           }}
         >
           {isLoading || approveLoading

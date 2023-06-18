@@ -14,7 +14,6 @@ import { useGetProposal } from "@/hooks/useGetProposal";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 import React from "react";
-import { Button } from "../ui/button";
 
 export interface ClaimCardProps {
   databaseId: string;
@@ -41,13 +40,22 @@ const ClaimCard = ({
   const [proposalId, setProposalId] = React.useState<string>("");
   const [creator, setCreator] = React.useState<string>("");
   const [voters, setVoters] = React.useState<string[]>([]);
+  const [winnerData, setWinnerData] = React.useState<any>({});
+
   useEffect(() => {
     if (sortedProposals.length > 0) {
       setProposalId(sortedProposals[0].id.toString());
       setCreator(sortedProposals[0].creator);
       setVoters(sortedProposals[0].voters);
+      setWinnerData({
+        id: sortedProposals[0].id,
+        creator: sortedProposals[0].creator,
+        voters: sortedProposals[0].voters,
+        cid: "QmZ2Q9Z",
+      });
     }
   }, [sortedProposals]);
+
   const { data, isLoading, isSuccess, write } = useContractWrite({
     address: addressList.getAddress("MyGovernor"),
     abi: MyGovernor__factory.abi,
@@ -81,6 +89,7 @@ const ClaimCard = ({
       );
     }
   };
+
   return (
     <div className="relative">
       <Image
@@ -109,18 +118,6 @@ const ClaimCard = ({
                 write();
               }}
             />
-            {page === "my-joined" && address === creator && (
-              <Button className="py-1 w-full h-fit bg-gradient-to-b from-blue/0 from-5%  via-blue via-30% to-blue/22 to-90% rounded-full capitalize">
-                <Image
-                  src="/assets/lighthouse.jpeg"
-                  width={20}
-                  height={20}
-                  alt="lighthouse"
-                  className="rounded-full"
-                />
-                upload
-              </Button>
-            )}
           </div>
         ) : claim === "claimed" ? (
           <CampaignButton text="claimed" />
