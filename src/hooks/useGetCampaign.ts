@@ -19,6 +19,7 @@ export interface Campaign {
   title?: string;
   description?: string;
   catorgory?: string;
+  fileName?: string;
   imgCid?: string;
   typeFile?: string;
 }
@@ -80,6 +81,7 @@ export const useGetCampaign = () => {
               item.catorgory = campaignDb.catorgory;
               item.imgCid = campaignDb.imgCid;
               item.typeFile = campaignDb.typeFile;
+              item.fileName = campaignDb.fileName;
             }
           });
         });

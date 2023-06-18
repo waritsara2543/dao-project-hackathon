@@ -21,8 +21,8 @@ const VotedData = () => {
                 title={item.title || "Untitled"}
                 description={item.description || "No description"}
                 image={
-                  //
-                  "/assets/campaign.png"
+                  `https://dweb.link/ipfs/${item.imgCid}/${item.fileName}`
+                  //"/assets/campaign.png"
                 }
                 status={item.status}
                 claim="claim"

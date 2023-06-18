@@ -54,7 +54,8 @@ const RenderPage = () => {
           <div className="flex justify-center">
             {" "}
             <Image
-              src="/assets/campaign.png"
+              src={`https://dweb.link/ipfs/${campaign?.imgCid}/${campaign?.fileName}`}
+              //"/assets/campaign.png"
               alt="Picture of the author"
               width={300}
               height={300}

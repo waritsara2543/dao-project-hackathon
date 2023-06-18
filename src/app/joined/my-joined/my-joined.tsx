@@ -25,7 +25,8 @@ const Myjoined = () => {
                 description={item.description || "No description"}
                 image={
                   //`https://dweb.link/ipfs/${item.imgCid}`
-                  "/assets/campaign.png"
+                  `https://dweb.link/ipfs/${item.imgCid}/${item.fileName}`
+                  //"/assets/campaign.png"
                 }
                 status={item.status}
                 claim="claim"

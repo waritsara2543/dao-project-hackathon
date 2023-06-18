@@ -27,8 +27,8 @@ const CampaignData = ({
   }, [isAll, allCampaign, myCampaign, status]);
 
   return (
-    <div className="flex justify-center sm:flex sm:justify-start overflow-x-auto h-[300px]">
-      <div className="flex gap-6 sm:gap-8 md:gap-10 lg:gap-12">
+    <div className="flex justify-center sm:flex sm:justify-start h-[300px]">
+      <div className="grid grid-cols-5 gap-6 sm:gap-8 md:cols-6 lg:cols-8">
         {data?.map((item, index) => (
           <Link
             key={index}
@@ -39,6 +39,7 @@ const CampaignData = ({
                 campaignId: item.campaignId,
               },
             }}
+            className="py-5"
           >
             {" "}
             <CampaignCard
@@ -48,7 +49,8 @@ const CampaignData = ({
               description={item.description || "No description"}
               image={
                 //`https://dweb.link/ipfs/${item.imgCid}`
-                "/assets/campaign.png"
+                `https://dweb.link/ipfs/${item.imgCid}/${item.fileName}`
+                //"/assets/campaign.png"
               }
               status={item.status}
             />
