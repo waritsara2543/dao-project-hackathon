@@ -36,6 +36,7 @@ const ClaimCard = ({
 }: ClaimCardProps) => {
   const { sortedProposals } = useGetProposal(campaignId);
   const { address } = useAccount();
+
   const { data, isLoading, isSuccess, write } = useContractWrite({
     address: addressList.getAddress("MyGovernor"),
     abi: MyGovernor__factory.abi,
@@ -43,7 +44,7 @@ const ClaimCard = ({
     args: [
       BigInt(campaignId),
       address as `0x${string}`,
-      BigInt(sortedProposals[0].id || 0),
+      BigInt(sortedProposals[0].id ? sortedProposals[0].id : 0),
     ],
     onSuccess: (data) => {
       toast.success(`Successfully created`, {
