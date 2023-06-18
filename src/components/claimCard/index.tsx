@@ -14,7 +14,8 @@ import { useGetProposal } from "@/hooks/useGetProposal";
 import toast from "react-hot-toast";
 
 export interface ClaimCardProps {
-  id: string;
+  databaseId: string;
+  campaignId: string;
   title: string;
   description: string;
   image: string;
@@ -23,7 +24,8 @@ export interface ClaimCardProps {
   page: "my-joined" | "my-voted";
 }
 const ClaimCard = ({
-  id,
+  databaseId,
+  campaignId,
   title,
   description,
   image,
@@ -31,20 +33,24 @@ const ClaimCard = ({
   claim,
   page,
 }: ClaimCardProps) => {
-  const { sortedProposals } = useGetProposal(id);
+  const { sortedProposals } = useGetProposal(campaignId);
   const { address } = useAccount();
   const { data, isLoading, isSuccess, write } = useContractWrite({
     address: addressList.getAddress("MyGovernor"),
     abi: MyGovernor__factory.abi,
     functionName: "claimRewards",
-    args: [BigInt(id), address as `0x${string}`, BigInt(sortedProposals[0].id)],
+    args: [
+      BigInt(campaignId),
+      address as `0x${string}`,
+      BigInt(sortedProposals[0].campaignId || 0),
+    ],
     onSuccess: (data) => {
       toast.success(`Successfully created`, {
         duration: 10000,
       });
     },
     onError: (error) => {
-      toast.error(`Error! ${error}`, {
+      toast.error(`Error!`, {
         duration: 10000,
       });
     },

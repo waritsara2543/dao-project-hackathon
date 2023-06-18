@@ -9,14 +9,16 @@ import {
 import Link from "next/link";
 
 export interface CampaignCardProps {
-  id: string;
+  databaseId: string;
+  campaignId: string;
   title: string;
   description: string;
   image: string;
   status: "open" | "closed" | "coming";
 }
 const CampaignCard = ({
-  id,
+  databaseId,
+  campaignId,
   title,
   description,
   image,
@@ -65,8 +67,12 @@ const CampaignCard = ({
         {status === "open" ? (
           <div className="w-full flex gap-4">
             <Link
-              href={{ pathname: "/join-form", query: { id: id } }}
-              className="w-full">
+              href={{
+                pathname: "/join-form",
+                query: { databaseId: databaseId, campaignId: campaignId },
+              }}
+              className="w-full"
+            >
               <CampaignButton text="join" />
             </Link>
             {/* <Link

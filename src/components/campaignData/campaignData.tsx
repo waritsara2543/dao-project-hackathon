@@ -3,7 +3,6 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import CampaignCard from "../campaignCard";
 import { useGetCampaign, Campaign } from "@/hooks/useGetCampaign";
-import { log } from "console";
 
 const CampaignData = ({ isAll }: { isAll: boolean }) => {
   const { allCampaign, myCampaign } = useGetCampaign();
@@ -29,8 +28,10 @@ const CampaignData = ({ isAll }: { isAll: boolean }) => {
             query: { databaseId: item.databaseId, campaignId: item.campaignId },
           }}
         >
+          {" "}
           <CampaignCard
-            id={item.databaseId}
+            databaseId={item.databaseId}
+            campaignId={item.campaignId}
             title={"title"}
             description={"description"}
             image={`https://dweb.link/ipfs/${item.imgCid}`}

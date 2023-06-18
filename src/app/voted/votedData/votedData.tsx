@@ -12,11 +12,18 @@ const VotedData = () => {
         (item) =>
           item.status !== "coming" && (
             <Link
-              href={{ pathname: `/campaign`, query: { id: item.campaignId } }}
+              href={{
+                pathname: `/campaign`,
+                query: {
+                  databaseId: item.databaseId,
+                  campaignId: item.campaignId,
+                },
+              }}
               key={item.campaignId}
             >
               <ClaimCard
-                id={item.campaignId.toString()}
+                campaignId={item.campaignId}
+                databaseId={item.databaseId}
                 title={"title"}
                 description={"description"}
                 image={"/assets/campaign.png"}

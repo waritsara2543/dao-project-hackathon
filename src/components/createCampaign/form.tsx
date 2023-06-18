@@ -71,39 +71,39 @@ const Form = () => {
 
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
-    if (
-      !file ||
-      !title ||
-      !description ||
-      !category ||
-      !submitFileType ||
-      !closeDate ||
-      !openDate ||
-      !amountPrize
-    ) {
-      toast.error("Please fill all the fields", {
-        duration: 10000,
-      });
-      return;
-    }
-    // if (!authState) {
-    //   signIn();
-    //   checkAuth();
+    // if (
+    //   !file ||
+    //   !title ||
+    //   !description ||
+    //   !category ||
+    //   !submitFileType ||
+    //   !closeDate ||
+    //   !openDate ||
+    //   !amountPrize
+    // ) {
+    //   toast.error("Please fill all the fields", {
+    //     duration: 10000,
+    //   });
+    //   return;
     // }
-    setUploading(true);
+    // // if (!authState) {
+    // //   signIn();
+    // //   checkAuth();
+    // // }
+    // setUploading(true);
     if (Number(allowance) !== 0) {
-      const client = new Web3Storage({
-        token: process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY as string,
-      });
-      const imgCid = await client.put([file]);
-      // connect db and record Proposal
-      const create = await createRecord(imgCid);
-      if (!create.res) {
-        alert("Error creating record");
-        setUploading(false);
-        return;
-      }
-      setUploading(false);
+      // const client = new Web3Storage({
+      //   token: process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY as string,
+      // });
+      // const imgCid = await client.put([file]);
+      // // connect db and record Proposal
+      // const create = await createRecord(imgCid);
+      // if (!create.res) {
+      //   alert("Error creating record");
+      //   setUploading(false);
+      //   return;
+      // }
+      // setUploading(false);
       write();
       return router.push(`/my-campaign`);
     } else {
@@ -149,7 +149,7 @@ const Form = () => {
       });
     },
     onError: (error) => {
-      toast.error(`Error! ${error}`, {
+      toast.error(`Error!`, {
         duration: 10000,
       });
     },

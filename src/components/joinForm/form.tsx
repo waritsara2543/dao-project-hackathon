@@ -17,7 +17,7 @@ import toast, { Toaster } from "react-hot-toast";
 const Form = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const campaignId = searchParams.get("id");
+  const campaignId = searchParams.get("campaignId");
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -34,7 +34,7 @@ const Form = () => {
       });
     },
     onError: (error) => {
-      toast.error(`Error! ${error}`, {
+      toast.error(`Error!`, {
         duration: 10000,
       });
     },
@@ -59,19 +59,19 @@ const Form = () => {
       return;
     }
     setUploading(true);
-    // write();
-    const client = new Web3Storage({
-      token: process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY as string,
-    });
-    const cid = await client.put([file]);
-    // connect db and record Proposal
-    const create = await createRecord(cid);
-    if (!create.res) {
-      alert("Error creating record");
-      setUploading(false);
-      return;
-    }
-    setUploading(false);
+    write();
+    // const client = new Web3Storage({
+    //   token: process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY as string,
+    // });
+    // const cid = await client.put([file]);
+    // // connect db and record Proposal
+    // const create = await createRecord(cid);
+    // if (!create.res) {
+    //   alert("Error creating record");
+    //   setUploading(false);
+    //   return;
+    // }
+    // setUploading(false);
     return router.push(`/joined`);
   };
 
@@ -164,7 +164,8 @@ const Form = () => {
       <div className="flex justify-center">
         <Button
           className="bg-gradient-to-r from-purple to-font-pink px-8"
-          onClick={(e) => handleSubmit(e)}>
+          onClick={(e) => handleSubmit(e)}
+        >
           {isLoading ? "Loading..." : "Submit"}
         </Button>
       </div>
